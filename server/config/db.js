@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
     path = require('path'), // for reaching our models folder
     fs = require('fs'), // for reaching our models folder
     modelsPath = path.join(__dirname, './../models'), // gives direct access to our models folder
-    dbName = 'myTemplateDB'; // your database name must go here!
+    dbName = 'discussionBoardDB'; // your database name must go here!
 
 // Iterate through Models folder and load each file:
 fs.readdirSync(modelsPath).forEach(function(file) {

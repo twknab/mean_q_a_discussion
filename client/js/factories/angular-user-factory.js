@@ -2,13 +2,13 @@ app.factory('userFactory', ['$http', function($http) {
     // Setup Factory Object:
     var factory = {};
 
-    // Create:
-    factory.create = function(user, createCallback, errorsCallback) {
+    // login:
+    factory.login = function(user, loginCallback, errorsCallback) {
         console.log('Factory talking...', user);
-        $http.post('/users', user)
+        $http.post('/user', user)
             .then(function(newUser) {
                 console.log(newUser.data);
-                createCallback(newUser.data);
+                loginCallback(newUser.data);
             })
             .catch(function(err) {
                 console.log(err);

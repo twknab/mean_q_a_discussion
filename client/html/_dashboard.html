@@ -1,0 +1,21 @@
+<h2>Hello, {Person!}</h2>
+<fieldset><legend>Add A New Post:</legend>
+    <p ng-bind="error" class="error"></p>
+    <!-- Form -->
+    <form ng-submit="newPost()">
+        <label for="topic"> Topic:
+            <!-- Topic Field -->
+            <input type="text" name="topic" id="topic" ng-model="post.topic">
+        </label>
+        <label for="description"> Description:
+            <!-- Description Field -->
+            <textarea name="description" id="description" cols="50" rows="10" ng-model="post.description"></textarea>
+        </label>
+        <label for="category"> Category:
+            <!-- Category Select Field -->
+            <select name="category" id="category"></select>
+        </label>
+        <!-- Button -->
+        <input type="submit" value="Submit">
+    </form>
+</fieldset>

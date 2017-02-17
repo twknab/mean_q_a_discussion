@@ -5,13 +5,17 @@ var app = angular.module('app', ['ngRoute']);
 app.config(function($routeProvider) {
     $routeProvider
         .when('/', {
-            templateUrl: 'html/index.html', // root route partial
+            templateUrl: 'html/_index.html', // root route partial
             controller: 'userController',
         })
-        .when('/edit/:id', {
-            templateUrl: 'html/edit.html',
-            controller: 'editUserController',
+        .when('/dashboard', {
+            templateUrl: 'html/_dashboard.html', // root route partial
+            controller: 'dashboardController',
         })
+        // .when('/edit/:id', {
+        //     templateUrl: 'html/edit.html',
+        //     controller: 'editUserController',
+        // })
         .otherwise({
             redirectTo: '/',
         })

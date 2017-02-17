@@ -2,11 +2,10 @@ app.controller('userController', ['$scope', 'userFactory', '$location', '$routeP
 
     // Callbacks
     var cb = {
-        create: function(newUser) {
+        login: function(newUser) {
             $scope.error = '';
             $scope.person = {};
-            $scope.allUsers = {};
-            $scope.user = newUser;
+            $location.url('/dashboard');
         },
         error: function(err) {
             console.log('Errors returned from server:', err);
@@ -21,10 +20,10 @@ app.controller('userController', ['$scope', 'userFactory', '$location', '$routeP
         },
     };
 
-    // Create User:
-    $scope.create = function() {
-        console.log('Create Process: Angular controller running...', $scope.person);
-        userFactory.create($scope.person, cb.create, cb.error);
+    // Login User:
+    $scope.login = function() {
+        console.log('Login Process: Angular controller running...', $scope.person);
+        userFactory.login($scope.person, cb.login, cb.error);
     };
 
     // Show Users:

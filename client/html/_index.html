@@ -1,0 +1,13 @@
+<h2>Hello!</h2>
+<fieldset><legend>Login:</legend>
+    <p ng-bind="error" class="error"></p>
+    <!-- Form -->
+    <form ng-submit="login()">
+        <label for="username"> Username:
+            <!-- Username Field -->
+            <input type="text" name="username" id="username" ng-model="person.username">
+        </label>
+        <!-- Button -->
+        <input type="submit" value="Create">
+    </form>
+</fieldset>

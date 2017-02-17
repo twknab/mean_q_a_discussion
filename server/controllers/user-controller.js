@@ -20,15 +20,18 @@ module.exports = {
                 };
             })
     },
-    showAll: function(req, res) {
-        console.log('Server-side user controller talking...showing all posts...');
-        User.find({})
-            .then(function(allUsers) {
+    findLoggedIn: function(req, res) {
+        console.log('Server-side user controller talking...getting user...');
+        User.find({_id: req.user._id})
+        // note, you need to setup your tokens or passport
+        // that is to say, req.user won't exist until you set it up
+        // either via login, or so forth
+            .then(function(foundUser) {
                 console.log('All users found!');
                 console.log('%%%%%%%%%%%%%%%%%');
-                console.log(allUsers);
+                console.log(foundUser);
                 console.log('%%%%%%%%%%%%%%%%%');
-                return res.json(allUsers);
+                return res.json(foundUser);
             })
             .catch(function(err) {
                 console.log('Error finding all users', err);
