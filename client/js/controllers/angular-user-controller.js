@@ -2,14 +2,24 @@ app.controller('userController', ['$scope', 'userFactory', '$location', '$routeP
 
     // Callbacks
     var cb = {
-        login: function(newUser) {
-            $scope.error = '';
-            $scope.person = {};
+        login: function() {
+            $scope.loginErrors = '';
+            $scope.user = {};
             $location.url('/dashboard');
         },
-        error: function(err) {
+        register: function(newUser) {
+            $scope.registerErrors = '';
+            $scope.newUser = {};
+            $location.url('/dashboard');
+        },
+        loginError: function(err) {
             console.log('Errors returned from server:', err);
-            $scope.error = err;
+            $scope.loginErrors = '';
+            $scope.loginErrors = err;
+        },
+        registerError: function(err) {
+            console.log('Errors returned from server:', err);
+            $scope.registerErrors = err;
         },
         show: function(allUsers) {
             console.log(allUsers);
@@ -22,9 +32,15 @@ app.controller('userController', ['$scope', 'userFactory', '$location', '$routeP
 
     // Login User:
     $scope.login = function() {
-        console.log('Login Process: Angular controller running...', $scope.person);
-        userFactory.login($scope.person, cb.login, cb.error);
+        console.log('Login Process: Angular controller running...', $scope.user);
+        userFactory.login($scope.user, cb.login, cb.loginError);
     };
+
+    // Register User:
+    $scope.register = function() {
+        console.log('Registering user...', $scope.newUser);
+        userFactory.register($scope.newUser, cb.register, cb.registerError);
+    }
 
     // Show Users:
     $scope.show = function() {

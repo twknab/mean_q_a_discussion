@@ -1,13 +1,64 @@
-<h2>Hello!</h2>
-<fieldset><legend>Login:</legend>
-    <p ng-bind="error" class="error"></p>
-    <!-- Form -->
-    <form ng-submit="login()">
-        <label for="username"> Username:
+<div class="w3-card-4 w3-margin">
+    <div class="w3-container w3-blue">
+        <h2>Login</h2>
+    </div>
+    <!-- Errors -->
+    <div ng-repeat="error in loginErrors" class="error w3-margin">
+        <h3>{{error.message}}</h3>
+    </div>
+    <!-- Login Form -->
+    <form ng-submit="login()" class="w3-container">
+        <p>
             <!-- Username Field -->
-            <input type="text" name="username" id="username" ng-model="person.username">
-        </label>
-        <!-- Button -->
-        <input type="submit" value="Create">
+            <input type="text" name="username" id="username" ng-model="user.username" class="w3-input">
+            <label for="username">Username</label>
+        </p>
+        <p>
+            <!-- Password Field -->
+            <input type="password" name="password" id="password" ng-model="user.password" class="w3-input">
+            <label for="password">Password</label>
+        </p>
+        <p>
+            <!-- Button -->
+            <input type="submit" value="Login" class="w3-button w3-blue">
+        </p>
     </form>
-</fieldset>
+</div>
+<div class="w3-card-4 w3-margin">
+    <div class="w3-container w3-red">
+        <h2>Register</h2>
+    </div>
+    <!-- Errors -->
+    <h4 class="error w3-margin">
+        <ul ng-repeat="error in registerErrors">
+            <li>{{error.message}}</li>
+        </ul>
+    </h4>
+    <!-- Registration Form -->
+    <form ng-submit="register()" class="w3-container">
+        <p>
+            <!-- Username Field -->
+            <input type="text" name="username" id="username" ng-model="newUser.username" class="w3-input">
+            <label for="username">Username</label>
+        </p>
+        <p>
+            <!-- Email Field -->
+            <input type="email" name="email" id="email" ng-model="newUser.email" class="w3-input">
+            <label for="email">Email</label>
+        </p>
+        <p>
+            <!-- Password Field -->
+            <input type="password" name="password" id="password" ng-model="newUser.password" class="w3-input">
+            <label for="password">Password</label>
+        </p>
+        <p>
+            <!-- Confirm Password Field -->
+            <input type="password" name="password_confirm" id="password_confirm" ng-model="newUser.password_confirm" class="w3-input">
+            <label for="password_confirm">Password Confirm</label>
+        </p>
+        <p>
+            <!-- Button -->
+            <input type="submit" value="Register" class="w3-button w3-red">
+        </p>
+    </form>
+</div>

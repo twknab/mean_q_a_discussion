@@ -1,4 +1,4 @@
-app.controller('dashboardController', ['$scope', 'dashboardFactory', '$location', '$routeParams', function($scope, userFactory, $location, $routeParams) {
+app.controller('dashboardController', ['$scope', 'dashboardFactory', '$location', '$routeParams', function($scope, dashboardFactory, $location, $routeParams) {
 
     // Callbacks
     var cb = {
@@ -8,7 +8,7 @@ app.controller('dashboardController', ['$scope', 'dashboardFactory', '$location'
         },
         error: function(err) {
             console.log('Errors returned from server:', err);
-            $scope.error = err;
+            $location.url('/');
         },
     };
 
@@ -18,5 +18,7 @@ app.controller('dashboardController', ['$scope', 'dashboardFactory', '$location'
         console.log('Get User Process: Angular controller running...');
         dashboardFactory.getUser(cb.getUser, cb.error);
     };
+
+    $scope.getUser();
 
 }]);

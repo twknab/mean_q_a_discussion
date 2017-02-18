@@ -1,16 +1,6 @@
 #MEAN Discussion Board:
 
-##Login Page:
-	+ '/'
-	+ Welcome text.
-	+ Form with Enter Button (takes username)
-	+ Loads Dashboard After
-	+ Use JS Web Token after Login
-	+ Use Passport JS for Login
-
 ##Dashboard Page:
-	+ `/#!/dashboard`
-	+ Welecome text with username
 	+ Search Box
 	+ Table:
 		+ Category
@@ -140,3 +130,24 @@
 			- Get Create Post Working
 			- Get Create Comment Working
 			- Get Show User Profile Working
+
+
+##Questions During Development:
+
+	1. How do I get my JWT's to persist after login?
+
+		Right now, when you goto '/dashboard' without logging in or registering,
+		the lack of the JWT is triggered and the user is redirected to '/'.
+
+		However, even after logging in, despite the `/dashboard` page loading,
+		any page refresh will trigger the lack of JWT and re-load `/`
+
+		Question: Is there any way to persist the JWT so refresh does not redir?
+
+##Where I Left Off:
+
+	+ Finished login / registration forms and password hashing. Dashboard loads
+	and retrieves user.
+
+	+ Issues: Sloppy code. Maybe refactor after? JWT's not "sticking around", I
+	understand JWTs are not session info, but any way for them to persist?

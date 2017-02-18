@@ -1,40 +1,88 @@
+// Setup JSON Web Token:
+var jwt = require('jsonwebtoken'), // JSON Web Tokens
+    myToken;
+
 // Grab our Mongoose Model:
 var User = require('mongoose').model('User');
 
 module.exports = {
-    // Create a user
-    create: function(req, res) {
+    // Login a user
+    login: function(req, res) {
         console.log('Server-side user controller talking...', req.body);
+
+        // Validation: Username and Password Empty Check:
+        if (!req.body.username || !req.body.password) {
+            var err = "Username and Password are required fields.";
+            return res.status(500).json({message: {message: err}});
+        };
+
+        // Look Up User based on Username:
+        User.findOne({username: req.body.username})
+            .then(function(foundUser) {
+                // If User Not Found, Error:
+                if (!foundUser) {
+                    console.log('NOT FOUND!!!');
+                    var err = "Username was not found."
+                    return res.status(500).json({message: {message: err}});
+                }
+                // If User Found, Validate Username and Password:
+                console.log('CHECKING PWD');
+                foundUser.verifyPassword(req.body.password)
+                    .then(function() {
+                        myToken = jwt.sign({username: req.body.username}, 'mySecretPasscode123!');
+                        console.log({user: foundUser, myToken: myToken});
+                        return res.json({user: foundUser, myToken: myToken});
+
+                    })
+                    .catch(function(err) {
+                        // If Validation Fails:
+                        console.log(err);
+                        return res.status(500).json({message: {message: 'Password is not correct.'}})
+                    })
+            })
+            // If Lookup Fails:
+            .catch(function(err) {
+                console.log('Error finding user!', err.message);
+                return res.status(500).json(err);
+            })
+    },
+    // Register a user
+    register: function(req, res) {
+        console.log('Server-side user controller talking...', req.body);
+
+        // Check if Passwords Match:
+        if (req.body.password != req.body.password_confirm) {
+            return res.status(500).json({message: {message: 'Password and confirmation do not match.'}});
+        }
+
         User.create(req.body)
             .then(function(newUser) {
-                return res.json(newUser);
+                myToken = jwt.sign({username: req.body.username}, 'mySecretPasscode123!');
+                console.log(jwt.verify(myToken, 'mySecretPasscode123!'));
+                console.log({user: newUser, myToken: myToken});
+                return res.json({user: newUser, myToken: myToken});
             })
             .catch(function(err) {
-                console.log('Error trying to create user!', err);
+                console.log('Error trying to create user!', err.message);
                 if (err.errors == null) {
                     console.log('Custom Validator Function Error detected...formatting now and sending to front end:');
-                    return res.status(500).json(err.message);
+                    return res.status(500).json({message: {message: err.message}});
                 } else {
                     console.log('Built in Mongoose Validation detected....');
-                    return res.status(500).json(err.errors.username.message)
+                    return res.status(500).json(err.errors)
                 };
             })
     },
-    findLoggedIn: function(req, res) {
+    getUser: function(req, res) {
         console.log('Server-side user controller talking...getting user...');
-        User.find({_id: req.user._id})
-        // note, you need to setup your tokens or passport
-        // that is to say, req.user won't exist until you set it up
-        // either via login, or so forth
+        console.log(jwt.verify(myToken, 'mySecretPasscode123!'));
+        User.findOne({username: jwt.verify(myToken, 'mySecretPasscode123!').username})
             .then(function(foundUser) {
-                console.log('All users found!');
-                console.log('%%%%%%%%%%%%%%%%%');
                 console.log(foundUser);
-                console.log('%%%%%%%%%%%%%%%%%');
                 return res.json(foundUser);
             })
             .catch(function(err) {
-                console.log('Error finding all users', err);
+                console.log(err);
                 return res.status(500).json(err);
             })
     },

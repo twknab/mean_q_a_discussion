@@ -2,7 +2,7 @@
 // var session = require('express-session');
 
 // Setup 'client' and 'bower_components' static folders:
-module.exports = function(express, app, bodyParser, path) {
+module.exports = function(express, app, bodyParser, path, expressJWT, jwt) {
 
     // If using 'express-session', setup here.
     // var sessionInfo = {
@@ -22,5 +22,6 @@ module.exports = function(express, app, bodyParser, path) {
         .use(express.static(path.join(__dirname, './../../bower_components')))
         // .use(session(sessionInfo))
         // .use(bodyParser.urlencoded({extended: true}))
-        .use(bodyParser.json()); // setup bodyParser to send form data as JSON
+        .use(bodyParser.json()) // setup bodyParser to send form data as JSON
+        .use(expressJWT({secret: 'mySecretPasscode123!' }).unless({ path: ['/', '/login', '/register']}))
 };

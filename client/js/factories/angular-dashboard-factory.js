@@ -5,7 +5,7 @@ app.factory('dashboardFactory', ['$http', function($http) {
     // getUser:
     factory.getUser = function(getUserCallback, errorsCallback) {
         console.log('Factory talking...');
-        $http.get('/user')
+        $http.get('/dashboard')
             .then(function(foundUser) {
                 console.log(foundUser.data);
                 getUserCallback(foundUser.data);
