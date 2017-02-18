@@ -1,22 +1,35 @@
-{{user}}
-<h2>Hello, {{user.username}}!</h2>
-<fieldset><legend>Add A New Post:</legend>
-    <p ng-bind="error" class="error"></p>
+<h2 class="w3-margin-left"><b>Hello, {{user.username}}!</b></h2>
+<div class="w3-card-4 w3-margin">
+    <!-- Container Title -->
+    <div class="w3-container w3-blue">
+        <h2>New Post:</h2>
+    </div>
+    <!-- Errors -->
+    <div ng-repeat="error in newPostErrors" class="error w3-margin">
+        <h3>{{error.message}}</h3>
+    </div>
     <!-- Form -->
-    <form ng-submit="newPost()">
-        <label for="topic"> Topic:
+    <form ng-submit="newPost()" class="w3-container">
+        <p>
             <!-- Topic Field -->
-            <input type="text" name="topic" id="topic" ng-model="post.topic">
-        </label>
-        <label for="description"> Description:
+            <input type="text" name="topic" id="topic" ng-model="post.topic" class="w3-input">
+            <label for="topic">Topic</label>
+        </p>
+        <p>
             <!-- Description Field -->
-            <textarea name="description" id="description" cols="50" rows="10" ng-model="post.description"></textarea>
-        </label>
-        <label for="category"> Category:
+            <textarea name="description" id="description" cols="50" rows="10" ng-model="post.description" class="w3-input"></textarea>
+            <label for="description"> Description</label>
+        </p>
+        <p>
             <!-- Category Select Field -->
-            <select name="category" id="category"></select>
-        </label>
-        <!-- Button -->
-        <input type="submit" value="Submit">
+            <select name="category" id="category" ng-model="post.category" class="w3-select w3-border">
+                <option ng-repeat="category in categories" value="{{category._id}}">{{category.name}}</option>
+            </select>
+            <label for="category">Category</label>
+        </p>
+        <p>
+            <!-- Button -->
+            <input type="submit" value="Submit">
+        </p>
     </form>
-</fieldset>
+</div>

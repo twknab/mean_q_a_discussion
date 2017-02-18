@@ -29,11 +29,9 @@
         <h2>Register</h2>
     </div>
     <!-- Errors -->
-    <h4 class="error w3-margin">
-        <ul ng-repeat="error in registerErrors">
-            <li>{{error.message}}</li>
-        </ul>
-    </h4>
+    <div ng-repeat="error in registerErrors" class="error w3-margin">
+        <h3>{{error.message}}</h3>
+    </div>
     <!-- Registration Form -->
     <form ng-submit="register()" class="w3-container">
         <p>

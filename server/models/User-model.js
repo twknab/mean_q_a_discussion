@@ -10,21 +10,21 @@ var UserSchema = new Schema (
             type: String,
             minlength: [2, 'Username must be at least 2 characters.'],
             maxlength: [20, 'Username must be less than 20 characters.'],
-            required: [true, 'Your username cannot be blank.'],
+            required: [true, 'Username is required.'],
             trim: true,
             unique: true, // username must be unique
             dropDups: true,
         }, // end username field
         email: {
             type: String,
-            required: [true, 'Email is required and may contain only letters, numbers, and the following characters: ".", "+", "_", "-"'],
+            required: [true, 'Email is required and must be in a valid email format.'],
             trim: true,
             unique: true, // email must be unique
             dropDups: true,
         }, // end email field
         password: {
             type: String,
-            required: [true, 'Your password cannot be blank.'],
+            required: [true, 'Password is required.'],
             trim: true,
         }, // end password field
     },
@@ -39,31 +39,26 @@ var UserSchema = new Schema (
 
 // RegEx Validation (Alphanumerical and Underscores Only):
 UserSchema.methods.alphaumerUsernameCheck = function(username) {
-    console.log('Username Creation Validation...Assessing for alphanumer characters and underscores...');
     var regex = /^[a-z0-9_]+$/i;
     return regex.test(username);
 };
 
-// Case insensitive query validation instance method:
+// Checks for duplicate usernames or emails in database prior to user creation:
 UserSchema.methods.checkDuplicates = function(user, next) {
-    console.log('Checking for duplicates...');
     User.findOne({username: { $regex : new RegExp("^" + user.username + "$", "i")}})
         .then(function(foundUser) {
-            if(foundUser) { // if user is found, the following error is generated and sent to client (phase 1 passed but phase 2 failed):
-                console.log('Username Creation Validation ERROR...existing user has been found...validation failed...', foundUser);
-                var err = new Error('Username already exists.');
+            if(foundUser) { // if user is found, send error:
+                var err = new Error('Username is already taken.');
                 next(err);
             }
-            if(!foundUser) { // if user is not found, then user can proceed to be created
-                console.log('Username duplicate check PASSED...no existing users found...now checking email...');
+            if(!foundUser) { // if user is not found, check for email duplicates:
                 User.findOne({email: { $regex : new RegExp("^" + user.email + "$", "i")} })
                     .then(function(foundEmail) {
-                        if(foundEmail) {
-                            console.log("Existing email already in DB");
-                            err = new Error('Email is already registered.');
+                        if(foundEmail) { // if email found, send error:
+                            err = new Error('Email already is associated with a user account.');
                             next(err);
                         }
-                        if(!foundEmail) {
+                        if(!foundEmail) { // if no errors, continue:
                             next();
                         }
                     })
@@ -73,7 +68,6 @@ UserSchema.methods.checkDuplicates = function(user, next) {
             }
         })
         .catch(function(err) { // if our regex query goes awry this will catch any errors:
-            console.log('Error performing case insensitive query to MongoDB...', err);
             next(err);
         })
 };
@@ -92,24 +86,18 @@ UserSchema.methods.verifyPassword = function(password) {
 UserSchema.pre('save', function(next) {
     var self = this;
 
-    bcrypt.hash(self.password, 10) // will return a promise
+    bcrypt.hash(self.password, 10) // returns encrpyted hash as promise:
         .then(function(hash) {
-            console.log('Hashing Password...');
-            self.password = hash; // updates p/w entry to hash
-            // Validation 1: Username: Alphanumer and underscore Regex Check:
-            if (self.alphaumerUsernameCheck(self.username)) { // if phase 1 validation returns as true, check for duplicates (phase 2)
-                console.log('Username Creation Validation PASSED basic alphanum + underscore validation...');
-                // Duplicate Check (Username and Email) via Case Insensitive Mongoose Queries:
-                self.checkDuplicates(self, next);
-                // Encrypts our Password:
+            self.password = hash; // set password to returned hash
+            if (self.alphaumerUsernameCheck(self.username)) { // if alphanumer validation passes:
+                self.checkDuplicates(self, next); // check for username or email duplicates
             } else {
-                console.log('Username Creation Validation ERROR...');
-                var err = new Error('Username may contain only letters, numbers or underscores.');
+                var err = new Error('Username may contain only letters, numbers or underscores.'); // if username fails validation
                 console.log(err);
                 next(err);
             };
         })
-        .catch(next); // catches any errors
+        .catch(next);
 
 
 });

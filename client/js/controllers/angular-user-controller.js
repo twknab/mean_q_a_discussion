@@ -1,32 +1,25 @@
 app.controller('userController', ['$scope', 'userFactory', '$location', '$routeParams', function($scope, userFactory, $location, $routeParams) {
 
-    // Callbacks
+    // Callbacks:
     var cb = {
-        login: function() {
+        login: function() { // callback if login successful
             $scope.loginErrors = '';
             $scope.user = {};
             $location.url('/dashboard');
         },
-        register: function(newUser) {
+        register: function(newUser) { // callback if registration successful
             $scope.registerErrors = '';
             $scope.newUser = {};
             $location.url('/dashboard');
         },
-        loginError: function(err) {
+        loginError: function(err) { // callback if login error
             console.log('Errors returned from server:', err);
             $scope.loginErrors = '';
             $scope.loginErrors = err;
         },
-        registerError: function(err) {
+        registerError: function(err) { // callback if register error
             console.log('Errors returned from server:', err);
             $scope.registerErrors = err;
-        },
-        show: function(allUsers) {
-            console.log(allUsers);
-            $scope.allUsers = allUsers;
-        },
-        delete: function() {
-            $scope.show();
         },
     };
 
@@ -40,18 +33,6 @@ app.controller('userController', ['$scope', 'userFactory', '$location', '$routeP
     $scope.register = function() {
         console.log('Registering user...', $scope.newUser);
         userFactory.register($scope.newUser, cb.register, cb.registerError);
-    }
-
-    // Show Users:
-    $scope.show = function() {
-        console.log('Showing all users...');
-        userFactory.show(cb.show);
-    };
-
-    // Delete User:
-    $scope.delete = function(user) {
-        console.log('DELETING USER');
-        userFactory.delete(user, cb.delete);
     };
 
 }]);

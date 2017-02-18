@@ -146,8 +146,5 @@
 
 ##Where I Left Off:
 
-	+ Finished login / registration forms and password hashing. Dashboard loads
-	and retrieves user.
-
-	+ Issues: Sloppy code. Maybe refactor after? JWT's not "sticking around", I
-	understand JWTs are not session info, but any way for them to persist?
+	+ Post creation finished. Need to push user id to post. Unfortunately I made a new
+	controller and the scope does not have access to the token. Idea: merge the controllers
