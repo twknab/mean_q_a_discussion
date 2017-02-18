@@ -11,8 +11,11 @@ app.controller('dashboardController', ['$scope', 'dashboardFactory', '$location'
         },
         post: function(newPost) {
             $scope.post = '';
-            console.log('**6');
+            $scope.getAllPosts();
             console.log(newPost);
+        },
+        allPosts: function(allPosts) {
+            $scope.allPosts = allPosts;
         },
         getUserError: function(err) {
             console.log('Errors returned from server:', err);
@@ -34,12 +37,22 @@ app.controller('dashboardController', ['$scope', 'dashboardFactory', '$location'
     // Fetch database categories:
     $scope.getCategories = function() {
         dashboardFactory.getCategories(cb.getCategories)
-    }();
+    };
+
+    // Get categories on page load:
+    $scope.getCategories();
 
     // Make New Post:
     $scope.newPost = function() {
-        console.log('**1');
+        console.log($scope.post);
         dashboardFactory.newPost($scope.post, cb.post, cb.newPostError);
     };
+
+    // Get All Posts:
+    $scope.getAllPosts = function() {
+        dashboardFactory.getAllPosts(cb.allPosts);
+    };
+    // Get All Posts on Page Load:
+    $scope.getAllPosts();
 
 }]);

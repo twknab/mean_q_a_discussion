@@ -20,8 +20,8 @@ var PostSchema = new Schema (
             trim: true,
         }, // end description field
         category: {
-            type: Number,
-            required: [true, 'Category is required.']
+            type: Schema.Types.ObjectId,
+            ref: 'Category'
         }, // end category field
         user: {
             type: Schema.Types.ObjectId,
@@ -41,7 +41,22 @@ var PostSchema = new Schema (
 /**********************/
 PostSchema.methods.increaseCommentCount = function(){
     this.commentCount += 1;
-    return this.save();
+    this.save();
+    return true;
+};
+
+PostSchema.methods.updateUser = function(id){
+    console.log('updating user', id);
+    this.user = id;
+    this.save();
+    console.log(this);
+    return true;
+};
+
+PostSchema.methods.initCommentCount = function(){
+    this.commentCount = 0;
+    this.save();
+    return true;
 };
 
 /*************************/
@@ -51,8 +66,7 @@ PostSchema.methods.increaseCommentCount = function(){
 // Pre Save Hook:
 // PostSchema.pre('save', function(next) {
 //     var self = this;
-//
-//
+//     self.commentCount = 0;
 // });
 
 /***************************/

@@ -5,9 +5,6 @@ var mongoose = require('mongoose'),
 // Setup a schema:
 var CategorySchema = new Schema (
     {
-        _id: {
-            type: Number,
-        },
         name: {
             type: String,
             dropDups: true,

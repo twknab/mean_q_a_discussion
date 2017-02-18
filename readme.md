@@ -146,5 +146,9 @@
 
 ##Where I Left Off:
 
-	+ Post creation finished. Need to push user id to post. Unfortunately I made a new
-	controller and the scope does not have access to the token. Idea: merge the controllers
+	+ Retrieve Posts finished. Still need to link up post titles and usernames
+	+ Need to add in sorting for categories and topics and username
+	+ Build user profile page
+	+ Build Comment Model and increment `post.commentCounter` when created
+
+	Question: Why are category drop downs disappearing when page reloads?

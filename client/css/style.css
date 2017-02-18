@@ -2,15 +2,6 @@
 /*    MAIN STYLINGS:    */
 /************************/
 
-body {
-    font-family: sans-serif;
-}
-
-fieldset {
-    padding: 15px;
-    margin: 15px;
-}
-
 .error {
     color: red;
 }

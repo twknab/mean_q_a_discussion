@@ -1,4 +1,25 @@
 <h2 class="w3-margin-left"><b>Hello, {{user.username}}!</b></h2>
+<form class="w3-container">
+    <input type="text" ng-model="search" class="w3-input w3-border w3-margin-bottom" placeholder="search...">
+</form>
+<div class="w3-container">
+    <table class="w3-table-all w3-hoverable w3-card-4">
+        <tr>
+            <th class="w3-blue">Category:</th>
+            <th class="w3-blue">Topic:</th>
+            <th class="w3-blue">Username:</th>
+            <th class="w3-blue">Posts:</th>
+        </tr>
+        <tr ng-repeat='post in allPosts | filter: search'>
+            <td ng-bind="post.category.name"></td>
+            <td ng-bind="post.topic"></td>
+            <td ng-bind="post.user.username"></td>
+            <td ng-bind="post.commentCount"></td>
+        </tr>
+    </table>
+</div>
+
+<!-- New Post Container -->
 <div class="w3-card-4 w3-margin">
     <!-- Container Title -->
     <div class="w3-container w3-blue">
@@ -22,10 +43,10 @@
         </p>
         <p>
             <!-- Category Select Field -->
-            <select name="category" id="category" ng-model="post.category" class="w3-select w3-border">
+            <select name="postCategory" id="postCategory" ng-model="post.category" class="w3-select w3-border">
                 <option ng-repeat="category in categories" value="{{category._id}}">{{category.name}}</option>
             </select>
-            <label for="category">Category</label>
+            <label for="postCategory">Category</label>
         </p>
         <p>
             <!-- Button -->

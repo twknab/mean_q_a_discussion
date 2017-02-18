@@ -25,16 +25,23 @@ app.factory('dashboardFactory', ['$http', function($http) {
     };
 
     factory.newPost = function(post, postCallback, errorsCallback) {
-        console.log('**2'); // <<== This is where it breaks right now.
-        // the jwt tokens are saying no no
         $http.post('/post', post)
             .then(function(createdPost) {
-                console.log('**5');
                 postCallback(createdPost.data);
             })
             .catch(function(err) {
                 console.log(err.data)
                 errorsCallback(err.data);
+            })
+    };
+
+    factory.getAllPosts = function(allPostsCallback) {
+        $http.get('/post')
+            .then(function(allPosts) {
+                allPostsCallback(allPosts.data);
+            })
+            .catch(function(err) {
+                console.log(err.data);
             })
     };
 

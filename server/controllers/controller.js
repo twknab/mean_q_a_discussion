@@ -2,8 +2,10 @@
 var jwt = require('jsonwebtoken'), // JSON Web Tokens
     myToken;
 
-// Grab our Mongoose Model:
+// Grab our Mongoose Models:
 var User = require('mongoose').model('User');
+var Category = require('mongoose').model('Category');
+var Post = require('mongoose').model('Post');
 
 module.exports = {
 
@@ -51,7 +53,7 @@ module.exports = {
         // Create User:
         User.create(req.body)
             .then(function(newUser) {
-                myToken = jwt.sign(req.body, 'mySecretPasscode123!');
+                myToken = jwt.sign({username: req.body.username}, 'mySecretPasscode123!');
                 return res.json({user: newUser, myToken: myToken});
             })
             .catch(function(err) {
@@ -73,6 +75,50 @@ module.exports = {
             .catch(function(err) {
                 console.log(err);
                 return res.status(500).json(err);
+            })
+    },
+    // Get Categories:
+    getCategories: function(req, res) {
+        Category.find({})
+            .then(function(allCategories) {
+                console.log(allCategories);
+                res.json(allCategories);
+            })
+            .catch(function(err) {
+                console.log(err);
+                res.status(500).json(err);
+            })
+    },
+    // Create New Post:
+    newPost: function(req, res) {
+        Post.create(req.body)
+            .then(function(newPost) {
+                User.findOne({username: jwt.verify(myToken, 'mySecretPasscode123!').username})
+                    .then(function(foundUser) {
+                        newPost.updateUser(foundUser._id);
+                        newPost.initCommentCount();
+                        return res.json(newPost);
+                    })
+            })
+            .catch(function(err) {
+                if (err.errors == null) {
+                    return res.status(500).json({message: {message: err.message}});
+                } else {
+                    return res.status(500).json(err.errors)
+                };
+            })
+    },
+    // Get All Posts:
+    getAllPosts: function(req, res) {
+        Post.find({})
+            .populate('user')
+            .populate('category')
+            .exec()
+            .then(function(allPostsFull) {
+                res.json(allPostsFull)
+            })
+            .catch(function(err) {
+                res.status(500).json(err);
             })
     },
 };
