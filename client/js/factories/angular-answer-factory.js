@@ -66,6 +66,29 @@ app.factory('answerFactory', ['$http', function($http) {
             })
     };
 
+    // New Comment:
+    factory.newComment = function(comment, commentCallback, commErrorCallback) {
+        $http.post('/comment', comment)
+            .then(function(newComment) {
+                commentCallback(newComment.data);
+            })
+            .catch(function(err) {
+                console.log(err.data);
+                commErrorCallback(err.data);
+            })
+    };
+
+    // Get Comments:
+    factory.getComments = function(getCommmentsCallback) {
+        $http.get('/comment')
+            .then(function(allCommentsAndUsers) {
+                getCommmentsCallback(allCommentsAndUsers.data);
+            })
+            .catch(function(err) {
+                console.log(err);
+            })
+    };
+
     // Return Factory Object:
     return factory;
 }]);

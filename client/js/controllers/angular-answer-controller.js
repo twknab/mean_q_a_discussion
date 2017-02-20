@@ -15,15 +15,26 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
             $scope.newAnswerErrors = '';
             $scope.newAnswerErrors = err;
         },
-        getAnswersCallback: function(allAnswers) {
-            console.log(allAnswers);
-            $scope.allAnswers = allAnswers;
+        getAnswers: function(allAnswersAndUsers) {
+            console.log(allAnswersAndUsers);
+            $scope.allAnswers = allAnswersAndUsers;
         },
         upVote: function() {
             $scope.getAnswers();
         },
         downVote: function() {
             $scope.getAnswers();
+        },
+        comment: function() {
+            $scope.newComment = {};
+            $scope.getComments();
+        },
+        commentError: function(err) {
+            $scope.newCommentErrors = '';
+            $scope.newCommentErrors = err;
+        },
+        getComments: function(commentsAndUsers) {
+            $scope.allComments = commentsAndUsers;
         },
     };
 
@@ -43,7 +54,7 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
 
     // Get All Answers:
     $scope.getAnswers = function() {
-        answerFactory.getAnswers(cb.getAnswersCallback);
+        answerFactory.getAnswers(cb.getAnswers);
     };
 
     // Get All Answers on page load:
@@ -61,6 +72,17 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
         console.log('down voting...');
         console.log(answer._id);
         answerFactory.downVote({id: answer._id}, cb.downVote)
+    };
+
+    // Create a Comment:
+    $scope.newComment = function() {
+        console.log($scope.responseComment);
+        answerFactory.newComment($scope.responseComment, cb.comment, cb.commentError);
+    };
+
+    // Show All Comments:
+    $scope.getComments = function() {
+        answerFactory.getComments(cb.getComments)
     };
 
 }]);

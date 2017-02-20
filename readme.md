@@ -153,8 +153,10 @@
 
 ##Where I Left Off:
 
-	+ Got answers to post. Got upvoting and downvoting to work. Now just need to add
-	comments form and iterate through comments. Also need to build log out.
+	+ Added comment form and iterated over comments but seems like some hiccup
+	is happening with the newComment form when trying to create a new comment.
+	I believe that it's due to `ng-model` on the comment form...Because we are
+	using `ng-repeat` with `answer`, I think your model has to change.
 
 ##Issues Experienced During Development:
 
@@ -175,3 +177,12 @@
 		format your request as: `$http.get('/user' + id)` -- use the `+` to add
 		the `id` onto your route (make sure to pass `id` in from `$routeParams.id`
 		from your controller and to your factory).
+
+	3. Nested use of `ng-repeat`:
+
+		+ Solution: Be sure to make the second repeat a property of the first
+		repeat. IE, `ng-repeat="comment in comments"` with a nested repeat as,
+		`ng-repeat="reply in replies"` would be written as instead:
+		`ng-repeat="reply in comment.replies"` -- this way the second `ng-repeat`
+		is now a sub-component of the first. If you don't do this, Angular will
+		break and throw a weird error.

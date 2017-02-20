@@ -84,11 +84,11 @@ module.exports = {
         Category.find({})
             .then(function(allCategories) {
                 console.log(allCategories);
-                res.json(allCategories);
+                return res.json(allCategories);
             })
             .catch(function(err) {
                 console.log(err);
-                res.status(500).json(err);
+                return res.status(500).json(err);
             })
     },
     // Create New Post:
@@ -119,10 +119,10 @@ module.exports = {
             .populate('category')
             .exec()
             .then(function(allPostsFull) {
-                res.json(allPostsFull)
+                return res.json(allPostsFull)
             })
             .catch(function(err) {
-                res.status(500).json(err);
+                return res.status(500).json(err);
             })
     },
     // Find a User for Profile Page:
@@ -131,10 +131,10 @@ module.exports = {
             .populate('posts')
             .exec()
             .then(function(foundUserFull) {
-                res.json(foundUserFull);
+                return res.json(foundUserFull);
             })
             .catch(function(err) {
-                res.status(500).json(err);
+                return res.status(500).json(err);
             })
     },
     // Find a Post for Answer and Comments page:
@@ -143,10 +143,10 @@ module.exports = {
             .populate('user')
             .exec()
             .then(function(postAndUser) {
-                res.json(postAndUser);
+                return res.json(postAndUser);
             })
             .catch(function(err) {
-                res.status(500).json(err);
+                return res.status(500).json(err);
             })
     },
     // Make a new answer:
@@ -175,10 +175,10 @@ module.exports = {
             .populate('user')
             .exec()
             .then(function(allAnswersAndUsers) {
-                res.json(allAnswersAndUsers);
+                return res.json(allAnswersAndUsers);
             })
             .catch(function(err) {
-                res.status(500).json(err);
+                return res.status(500).json(err);
             })
     },
     // Up Vote:
@@ -187,10 +187,10 @@ module.exports = {
         Answer.findOne({_id: req.body.id})
             .then(function(foundAnswer) {
                 foundAnswer.upVote();
-                res.json('Up Vote Successful...');
+                return res.json('Up Vote Successful...');
             })
             .catch(function(err) {
-                res.status(500).json(err);
+                return res.status(500).json(err);
             })
     },
     // Down Vote:
@@ -199,10 +199,37 @@ module.exports = {
         Answer.findOne({_id: req.body.id})
             .then(function(foundAnswer) {
                 foundAnswer.downVote();
-                res.json('Down Vote Successful...');
+                return res.json('Down Vote Successful...');
             })
             .catch(function(err) {
-                res.status(500).json(err);
+                return res.status(500).json(err);
+            })
+    },
+    // New Comment:
+    newComment : function(req, res) {
+        console.log(req.body);
+        Comment.create(req.body.id)
+            .then(function(newComment) {
+                User.findOne({username: jwt.verify(myToken, 'mySecretPasscode123!').username})
+                    .then(function(foundUser) {
+                        newComment.updateUser(foundUser._id);
+                        return res.json(newComment);
+                    })
+            })
+            .catch(function(err) {
+                return res.status(500).json(err);
+            })
+    },
+    // Get All Comments:
+    getAllComments : function(req, res) {
+        Comment.find({})
+            .populate('user')
+            .exec()
+            .then(function(allCommentsAndUsers) {
+                return res.json(allCommentsAndUsers)
+            })
+            .catch(function(err) {
+                return res.status(500).json(err);
             })
     },
 };
