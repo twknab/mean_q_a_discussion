@@ -1,0 +1,18 @@
+<h2 class="w3-margin-left"><b>Username: {{user.username}}!</b></h2>
+<div class="w3-container">
+    <div class="w3-container w3-blue">
+        <h2>User Posts:</h2>
+    </div>
+    <table class="w3-table-all w3-hoverable w3-card-4">
+        <tr>
+            <th class="w3-blue">Posts:</th>
+            <th class="w3-blue">Answers:</th>
+            <th class="w3-blue">Comments:</th>
+        </tr>
+        <tr>
+            <td ng-bind="user.posts"></td>
+            <td ng-bind="user.answers"></td>
+            <td ng-bind="user.responses"></td>
+        </tr>
+    </table>
+</div>

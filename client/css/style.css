@@ -2,10 +2,18 @@
 /*    MAIN STYLINGS:    */
 /************************/
 
+/*
+    Note: Most stylings in this project you will find in the W3.CSS stylsheet
+    in the header. Learn more here: https://www.w3schools.com/w3css/default.asp
+*/
+
 .error {
     color: red;
 }
 
+.inline-block {
+    display: inline-block;
+}
 
 /*************************/
 /*    RESPONSIVENESS:    */

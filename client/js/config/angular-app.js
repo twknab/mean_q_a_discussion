@@ -6,16 +6,20 @@ app.config(function($routeProvider) {
     $routeProvider
         .when('/', {
             templateUrl: 'html/_index.html', // root route partial
-            controller: 'userController',
+            controller: 'indexController',
         })
         .when('/dashboard', {
-            templateUrl: 'html/_dashboard.html', // root route partial
+            templateUrl: 'html/_dashboard.html', // dashboard partial
             controller: 'dashboardController',
         })
-        // .when('/edit/:id', {
-        //     templateUrl: 'html/edit.html',
-        //     controller: 'editUserController',
-        // })
+        .when('/user/:id', {
+            templateUrl: 'html/_user.html', // user profile partial
+            controller: 'userController',
+        })
+        .when('/topic/:id', { // this should be called /answer/ instead of /topic, but needed to meet wireframe specs
+            templateUrl: 'html/_answer.html', // post partial
+            controller: 'answerController',
+        })
         .otherwise({
             redirectTo: '/',
         })

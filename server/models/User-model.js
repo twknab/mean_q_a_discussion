@@ -27,6 +27,18 @@ var UserSchema = new Schema (
             required: [true, 'Password is required.'],
             trim: true,
         }, // end password field
+        posts: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Post'
+        }],
+        answers: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Answer'
+        }],
+        responses: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Response'
+        }],
     },
     {
         timestamps: true,
@@ -55,10 +67,12 @@ UserSchema.methods.checkDuplicates = function(user, next) {
                 User.findOne({email: { $regex : new RegExp("^" + user.email + "$", "i")} })
                     .then(function(foundEmail) {
                         if(foundEmail) { // if email found, send error:
+                            console.log('Email regex check fail');
                             err = new Error('Email already is associated with a user account.');
                             next(err);
                         }
                         if(!foundEmail) { // if no errors, continue:
+                            console.log('Passed email and username checks.');
                             next();
                         }
                     })
@@ -77,6 +91,28 @@ UserSchema.methods.verifyPassword = function(password) {
     return bcrypt.compare(password, this.password);
 };
 
+// Adds Post ID to user's post array:
+UserSchema.methods.addPost = function(id) {
+    console.log('adding post...', this);
+    this.posts.push(id);
+    this.save();
+    console.log(this.posts);
+    return true;
+};
+
+// Adds Answer ID to user's answer array:
+UserSchema.methods.addAnswer = function(id) {
+    this.answers.push(id);
+    this.save();
+    return true;
+};
+
+// Adds Response ID to user's response array:
+UserSchema.methods.addResponse = function(id) {
+    this.responses.push(id);
+    this.save();
+    return true;
+};
 
 /*************************/
 /*  PRE SAVE MIDDLEWARE  */
@@ -85,8 +121,17 @@ UserSchema.methods.verifyPassword = function(password) {
 // Pre Save Hook:
 UserSchema.pre('save', function(next) {
     var self = this;
+    console.log('pre save hook running...');
 
-    bcrypt.hash(self.password, 10) // returns encrpyted hash as promise:
+    var created = this.createdAt.getTime();
+    var now = new Date().getTime();
+    console.log(now - created);
+    // Checks if user is more than 1 second old, if so, skips pre-user creation checks:
+    if (now - created >= 1000) {
+        console.log('This is not a new user, and is older than 1 second, skipping duplicate check so instance methods can now run...');
+        next();
+    } else {
+        bcrypt.hash(self.password, 10) // returns encrpyted hash as promise:
         .then(function(hash) {
             self.password = hash; // set password to returned hash
             if (self.alphaumerUsernameCheck(self.username)) { // if alphanumer validation passes:
@@ -98,8 +143,7 @@ UserSchema.pre('save', function(next) {
             };
         })
         .catch(next);
-
-
+    }
 });
 
 /***************************/

@@ -10,7 +10,8 @@ app.controller('dashboardController', ['$scope', 'dashboardFactory', '$location'
             $scope.categories = categories;
         },
         post: function(newPost) {
-            $scope.post = '';
+            $scope.newPostErrors = '';
+            $scope.post = {};
             $scope.getAllPosts();
             console.log(newPost);
         },

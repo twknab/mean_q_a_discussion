@@ -1,0 +1,64 @@
+<h2 class="w3-margin-left"><b>Hello, {{user.username}}!</b></h2>
+<form class="w3-container">
+    <input type="text" ng-model="search" class="w3-input w3-border w3-margin-bottom" placeholder="search...">
+</form>
+<div class="w3-container">
+    <div class="w3-container w3-blue">
+        <h3>Question:</h3>
+    </div>
+    <div class="w3-card-4">
+        <div class="w3-panel w3-leftbar w3-sand w3-large">
+            <h4><a href="#!/user/{{post.user._id}}">{{post.user.username}}</a> posted:</h4>
+            <p class="w3-margin-left">
+                <b>{{post.topic}}</b>
+            </p>
+            <p class="w3-margin-left">
+                {{post.description}}
+            </p>
+        </div>
+    </div>
+</div>
+<!-- New Answer Container -->
+<div class="w3-card-4 w3-margin">
+    <!-- Container Title -->
+    <div class="w3-container w3-blue">
+        <h3>Post an Answer:</h3>
+    </div>
+    <!-- Errors -->
+    <div ng-repeat="error in newAnswerErrors" class="error w3-margin">
+        <h3>{{error.message}}</h3>
+    </div>
+    <!-- Form -->
+    <form ng-submit="newAnswer()" class="w3-container">
+        <p>
+            <!-- Description Field -->
+            <textarea name="description" id="description" cols="50" rows="10" ng-model="answer.description" class="w3-input"></textarea>
+            <label for="description">Answer</label>
+        </p>
+        <p>
+            <!-- Button -->
+            <input type="submit" value="Post Answer">
+        </p>
+    </form>
+</div>
+<div class="w3-margin">
+    <div class="w3-container w3-blue">
+        <h3>Answers:</h3>
+    </div>
+    <!-- All Answers Container -->
+    <div class="w3-card-4 w3-margin w3-margin-bottom" ng-repeat="answer in allAnswers | orderBy:'-upVotes'">
+        <div class="w3-margin-left inline-block">
+            <span class="w3-badge w3-green">{{answer.upVotes}}</span>
+            <i class="fa fa-arrow-up" aria-hidden="true" ng-click="upVote(answer)"></i>
+            <span class="w3-badge w3-red">{{answer.downVotes}}</span>
+            <i class="fa fa-arrow-down" aria-hidden="true" ng-click="downVote(answer)"></i>
+        </div>
+        <p class="w3-margin w3-padding-16 inline-block"><a href="#!/user/{{answer.user._id}}">{{answer.user.username}}</a>: {{answer.description}}</p>
+        <div>
+            <!-- container to hold all comments -->
+            <div>
+                <!-- container to hold comment form -->
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,18 +3,21 @@
     <input type="text" ng-model="search" class="w3-input w3-border w3-margin-bottom" placeholder="search...">
 </form>
 <div class="w3-container">
+    <div class="w3-container w3-blue">
+        <h2>Post Topics:</h2>
+    </div>
     <table class="w3-table-all w3-hoverable w3-card-4">
         <tr>
             <th class="w3-blue">Category:</th>
             <th class="w3-blue">Topic:</th>
             <th class="w3-blue">Username:</th>
-            <th class="w3-blue">Posts:</th>
+            <th class="w3-blue">Answers:</th>
         </tr>
         <tr ng-repeat='post in allPosts | filter: search'>
             <td ng-bind="post.category.name"></td>
-            <td ng-bind="post.topic"></td>
-            <td ng-bind="post.user.username"></td>
-            <td ng-bind="post.commentCount"></td>
+            <td><a href="#!/topic/{{post._id}}">{{post.topic}}</a></td>
+            <td><a href="/#!/user/{{post.user._id}}">{{post.user.username}}</a></td>
+            <td ng-bind="post.answerCount"></td>
         </tr>
     </table>
 </div>

@@ -27,7 +27,7 @@ var PostSchema = new Schema (
             type: Schema.Types.ObjectId,
             ref: 'User'
         },
-        commentCount: {
+        answerCount: {
             type: Number,
         }
     },
@@ -40,7 +40,7 @@ var PostSchema = new Schema (
 /*  INSTANCE METHODS  */
 /**********************/
 PostSchema.methods.increaseCommentCount = function(){
-    this.commentCount += 1;
+    this.answerCount += 1;
     this.save();
     return true;
 };
@@ -53,8 +53,8 @@ PostSchema.methods.updateUser = function(id){
     return true;
 };
 
-PostSchema.methods.initCommentCount = function(){
-    this.commentCount = 0;
+PostSchema.methods.initAnswerCount = function(){
+    this.answerCount = 0;
     this.save();
     return true;
 };
@@ -64,10 +64,15 @@ PostSchema.methods.initCommentCount = function(){
 /*************************/
 
 // Pre Save Hook:
-// PostSchema.pre('save', function(next) {
-//     var self = this;
-//     self.commentCount = 0;
-// });
+PostSchema.pre('save', function(next) {
+    var self = this;
+    if (!self.category) {
+        var err = new Error('Category selection is required.');
+        next(err);
+    } else {
+        next();
+    }
+});
 
 /***************************/
 /*  CREATE MODEL & EXPORT  */

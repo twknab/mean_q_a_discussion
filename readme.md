@@ -51,7 +51,7 @@
 		but modularizing seems like a good idea.
 
 	5. How many models do you need?
-		Answer: 3, `User`, `Post`, `Comment`
+		Answer: 4, `User`, `Post`, `Answer`, `Comment`
 
 	6. Define your models:
 		! Use Timestamps with all Models !:
@@ -69,6 +69,9 @@
 				Note: This will be a number that will
 				be associated with how many comments
 				are created.
+		`Answer`:
+			+ description: String
+			+ user: Schema.Type.ObjID
 		`Comment`
 			+ description: String,
 			+ user: Schema.Type.ObjID,
@@ -143,12 +146,32 @@
 		any page refresh will trigger the lack of JWT and re-load `/`
 
 		Question: Is there any way to persist the JWT so refresh does not redir?
+			(I believe you can set an expiration?)
+
+##Still Need To
++ Need to add in sorting for categories and topics and username
 
 ##Where I Left Off:
 
-	+ Retrieve Posts finished. Still need to link up post titles and usernames
-	+ Need to add in sorting for categories and topics and username
-	+ Build user profile page
-	+ Build Comment Model and increment `post.commentCounter` when created
+	+ Got answers to post. Got upvoting and downvoting to work. Now just need to add
+	comments form and iterate through comments. Also need to build log out.
 
-	Question: Why are category drop downs disappearing when page reloads?
+##Issues Experienced During Development:
+
+	1. Why are category drop downs disappearing when page reloads?
+
+		+ Solution: Your `/post/categories` route was being blocked by
+		your JWT tokens. Thus, when you refreshed the page, your categories
+		were not retrieved. To solve this, an exception was added in the JWT
+		setup under your `app.js`, and now your categories load on page refresh.
+
+	2. Why did my links in the format of `/user/{{user._id}}` give me a
+	'Cannot Get' error?
+
+		+ Solution: You forgot the hashbang -- this `#!` must go before your links.
+		The link style of, `/#!/user/{{user._id}}` will *NOT* trigger this error.
+
+		+ Also remember: When you're using the `$http` request in your factory,
+		format your request as: `$http.get('/user' + id)` -- use the `+` to add
+		the `id` onto your route (make sure to pass `id` in from `$routeParams.id`
+		from your controller and to your factory).

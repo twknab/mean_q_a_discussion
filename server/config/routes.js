@@ -10,4 +10,10 @@ module.exports = function(app) {
         .get('/post/categories', Controller.getCategories)
         .post('/post', Controller.newPost)
         .get('/post', Controller.getAllPosts)
+        .get('/post/:id', Controller.getPost)
+        .get('/user/:id', Controller.getUser)
+        .post('/answer', Controller.newAnswer)
+        .get('/answer', Controller.getAllAnswers)
+        .post('/answer/vote/up/', Controller.upVote)
+        .post('/answer/vote/down/', Controller.downVote)
 };
