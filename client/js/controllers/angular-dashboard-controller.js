@@ -53,8 +53,18 @@ app.controller('dashboardController', ['$scope', 'dashboardFactory', '$location'
     $scope.getAllPosts = function() {
         dashboardFactory.getAllPosts(cb.allPosts);
     };
+
     // Get All Posts on Page Load:
     $scope.getAllPosts();
 
+    // Setup Dashboard Table Header Sorting Variables:
+    $scope.propertyName = 'category.name';
+    $scope.reverse = false;
+
+    // Setup Dashboard Table Heading Toggle Click Actions:
+    $scope.sortBy = function(propertyName) {
+        $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
+        $scope.propertyName = propertyName;
+    };
 
 }]);

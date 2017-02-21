@@ -129,6 +129,8 @@ module.exports = {
     getUser: function(req, res) {
         User.findOne({_id: req.params.id})
             .populate('posts')
+            .populate('answers')
+            .populate('comments')
             .exec()
             .then(function(foundUserFull) {
                 return res.json(foundUserFull);
@@ -151,14 +153,20 @@ module.exports = {
     },
     // Make a new answer:
     newAnswer: function(req, res) {
+        console.log(req.body);
         Answer.create(req.body)
             .then(function(newAnswer) {
                 User.findOne({username: jwt.verify(myToken, 'mySecretPasscode123!').username})
                     .then(function(foundUser) {
-                        newAnswer.updateUser(foundUser._id); // add user ID to post
+                        newAnswer.updateUser(foundUser._id); // add user ID to answer
                         newAnswer.initVote(); // initialize up and down votes at 0
-                        foundUser.addAnswer(newAnswer._id);
-                        return res.json(newAnswer);
+                        newAnswer.updatePostID(req.body.postID); // adds postID to answer
+                        foundUser.addAnswer(newAnswer._id); // add answer ID to user array
+                        Post.findOne({_id: req.body.postID})
+                            .then(function(foundPost) {
+                                foundPost.increaseAnswerCount();
+                                return res.json(newAnswer);
+                            })
                     })
             })
             .catch(function(err) {
@@ -219,8 +227,8 @@ module.exports = {
                     .then(function(foundUser) {
                         console.log(foundUser._id);
                         newComment.updateUser(foundUser._id); // adds user ID to comment
-                        console.log(req.body.answerID);
                         newComment.addAnswer(req.body.answerID); // adds answer ID to Comment.answers array
+                        foundUser.addComments(newComment._id);
                         Answer.findOne({_id: req.body.answerID})
                             .then(function(foundAnswer) {
                                 foundAnswer.addComment(newComment._id); // adds comment into Answer.comments array
@@ -231,5 +239,11 @@ module.exports = {
             .catch(function(err) {
                 return res.status(500).json(err);
             })
+    },
+    // Logout:
+    logout : function(req, res) {
+        console.log('logging out now..');
+        myToken = {};
+        res.json('now logged out token destroyed.');
     },
 };

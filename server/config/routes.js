@@ -12,6 +12,7 @@ module.exports = function(app) {
         .get('/post', Controller.getAllPosts)
         .get('/post/:id', Controller.getPost)
         .get('/user/:id', Controller.getUser)
+        .post('/user/logout', Controller.logout)
         .post('/answer', Controller.newAnswer)
         .get('/answer', Controller.getAllAnswers)
         .post('/answer/vote/up/', Controller.upVote)

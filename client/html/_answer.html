@@ -1,3 +1,7 @@
+<div class="w3-display-container w3-right">
+    <button class="w3-bar-item w3-button w3-blue w3-text-shadow w3-margin-top" ng-click="dashboard()">Dashboard</button>
+    <button class="w3-bar-item w3-button w3-light-grey w3-text-shadow w3-margin-top w3-margin-right w3-margin-bottom" ng-click="logout()">Logout</button>
+</div>
 <h2 class="w3-margin-left"><b>Hello, {{user.username}}!</b></h2>
 <form class="w3-container">
     <input type="text" ng-model="search" class="w3-input w3-border w3-margin-bottom" placeholder="search...">
@@ -29,7 +33,7 @@
         <h3>{{error.message}}</h3>
     </div>
     <!-- Form -->
-    <form ng-submit="newAnswer()" class="w3-container">
+    <form ng-submit="newAnswer(post)" class="w3-container">
         <p>
             <!-- Description Field -->
             <textarea name="description" id="description" cols="50" rows="10" ng-model="answer.description" class="w3-input"></textarea>

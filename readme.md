@@ -1,30 +1,20 @@
-#MEAN Discussion Board:
-
-##Dashboard Page:
-	+ Table:
-		+ Column Sorting
-
-##Topic Page:
-	+ Logout and Dashboard Links
-
-##Profile Page:
-	+ Logout and Dashboard Links
-
-##Basic Questions to Start:
-	+ JSON Web Tokens Acting Funky?
-
 
 ##Still Need To (see above):
 
-	+ Column sorting
-	+ Logout Nav Links / Dashboard Nav Links
 	+ JWTs acting weird?
+	+ Same `Answers` for all Posts/Topics?
 
 ##Where I Left Off:
 
-	+ Commenting now working. Logged solution below. Now need to figure out
-	column sorting, and add the logout button and clean up any previous bugs.
-	Would be good to eventually refactor.
+	+ Got column sorting and logout/dashboard buttons done. JWTs still acting weird
+	and now same answers seem to be showing for EVERY post -- there are some issues
+	likely in the way that things are being grabbed from the DB.
+
+		Summary:
+
+			1) Look at issues about all answers being the same
+			2) Understand why JWTs aren't working
+			3) Any other cleanup or improvements?
 
 ###DEVELOPMENT ISSUES LOG:
 
@@ -117,3 +107,12 @@
 				-or using $httpProvider-
 
 				`$httpProvider.defaults.headers.common.Authorization = "Bearer <<long-string>>"`
+
+	6. Column Arranging and Sorting: This one was complicated, but how do you toggle the sorting of a column?
+	If you look at `/_dashboard.html` and the `angular-dashboard-controller`, you'll see that we use a few scope
+	functions and some usages of `ng-click` and `ng-class`, along with a `<span>` to get our display to work properly.
+
+		+ See Angular's documentation if the example in the code in those files is not sufficient. Note that this project uses
+		font-awesome, thus the fact that the icons are available via `class` (becuase we are using it conjunction with W3.CSS)
+
+		+ See example at the bottom: https://docs.angularjs.org/api/ng/filter/orderBy

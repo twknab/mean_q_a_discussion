@@ -16,8 +16,10 @@ app.factory('answerFactory', ['$http', function($http) {
     };
 
     // Create New Answer:
-    factory.newAnswer = function(answer, answerCallback, errorCallback) {
-        $http.post('/answer/', answer)
+    factory.newAnswer = function(answerData, answerCallback, errorCallback) {
+        console.log('factory running...');
+        console.log(answerData);
+        $http.post('/answer/', answerData)
             .then(function(newAnswer) {
                 console.log(newAnswer);
                 answerCallback(newAnswer.data);
@@ -75,6 +77,19 @@ app.factory('answerFactory', ['$http', function($http) {
             .catch(function(err) {
                 console.log(err);
                 commErrorCallback(err.data);
+            })
+    };
+
+    // Logout:
+    factory.logout = function(logoutCallback) {
+        console.log('about to send api request for logout');
+        $http.post('/user/logout')
+            .then(function() {
+                console.log('logged out!');
+                logoutCallback();
+            })
+            .catch(function(err) {
+                console.log(err);
             })
     };
 

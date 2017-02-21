@@ -26,6 +26,10 @@ var AnswerSchema = new Schema (
             type: Schema.Types.ObjectId,
             ref: 'Comment'
         }],
+        post: {
+            type: Schema.Types.ObjectId,
+            ref: 'Post'
+        },
     },
     {
         timestamps: true,
@@ -66,6 +70,12 @@ AnswerSchema.methods.updateUser = function(id){
 AnswerSchema.methods.addComment = function(id){
     console.log('pushing to comments array...', id);
     this.comments.push(id);
+    this.save();
+    return true;
+};
+
+AnswerSchema.methods.updatePostID = function(id){
+    this.post = id;
     this.save();
     return true;
 };

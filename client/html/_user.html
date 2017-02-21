@@ -1,4 +1,8 @@
-<h2 class="w3-margin-left"><b>Username: {{user.username}}!</b></h2>
+<div class="w3-display-container w3-right">
+    <button class="w3-bar-item w3-button w3-blue w3-text-shadow w3-margin-top" ng-click="dashboard()">Dashboard</button>
+    <button class="w3-bar-item w3-button w3-light-grey w3-text-shadow w3-margin-top w3-margin-right w3-margin-bottom" ng-click="logout()">Logout</button>
+</div>
+<h2 class="w3-margin-left"><b>User Profile: {{user.username}}</b></h2>
 <div class="w3-container">
     <div class="w3-container w3-blue">
         <h2>User Posts:</h2>
@@ -12,7 +16,7 @@
         <tr>
             <td ng-bind="user.posts"></td>
             <td ng-bind="user.answers"></td>
-            <td ng-bind="user.responses"></td>
+            <td ng-bind="user.comments"></td>
         </tr>
     </table>
 </div>

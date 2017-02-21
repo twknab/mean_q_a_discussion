@@ -39,7 +39,7 @@ var PostSchema = new Schema (
 /**********************/
 /*  INSTANCE METHODS  */
 /**********************/
-PostSchema.methods.increaseCommentCount = function(){
+PostSchema.methods.increaseAnswerCount = function(){
     this.answerCount += 1;
     this.save();
     return true;

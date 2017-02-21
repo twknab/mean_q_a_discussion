@@ -39,6 +39,10 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
             $scope.newCommentErrors = '';
             $scope.newCommentErrors = err;
         },
+        logout: function() {
+            console.log('url redirecting...');
+            $location.url('/');
+        },
     };
 
     // Get Post/Topic:
@@ -51,8 +55,13 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
     $scope.getPost();
 
     // Create a new Answer:
-    $scope.newAnswer = function() {
-        answerFactory.newAnswer($scope.answer, cb.answer, cb.newAnswerError);
+    $scope.newAnswer = function(post) {
+        $scope.answerData = {
+            description: $scope.answer.description,
+            postID: post._id,
+        };
+        console.log($scope.answerData);
+        answerFactory.newAnswer($scope.answerData, cb.answer, cb.newAnswerError);
     };
 
     // Get All Answers:
@@ -87,6 +96,17 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
         answer.newUserComment.answerID = answer._id;
         console.log(answer.newUserComment.answerID);
         answerFactory.newComment(answer.newUserComment, cb.comment, cb.commentError);
+    };
+
+    // Dashboard Home Button:
+    $scope.dashboard = function() {
+        $location.url('/dashboard');
+    };
+
+    // Logout:
+    $scope.logout = function() {
+        console.log('logging out..');
+        answerFactory.logout(cb.logout);
     };
 
 }]);

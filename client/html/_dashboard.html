@@ -8,12 +8,24 @@
     </div>
     <table class="w3-table-all w3-hoverable w3-card-4">
         <tr>
-            <th class="w3-blue">Category:</th>
-            <th class="w3-blue">Topic:</th>
-            <th class="w3-blue">Username <span class="fa fa-caret-down"></span><span class="fa fa-caret-up"></span></th>
-            <th class="w3-blue">Answers</th>
+            <th class="w3-blue" ng-click="sortBy('category.name')">Category
+                <span class="fa fa-caret-up" ng-show="propertyName === 'category.name' && !reverse" ng-class="{reverse: reverse}"></span>
+                <span class="fa fa-caret-down" ng-show="propertyName === 'category.name' && reverse" ng-class="{reverse: reverse}"></span>
+            </th>
+            <th class="w3-blue" ng-click="sortBy('topic')">Topic
+                <span class="fa fa-caret-up" ng-show="propertyName === 'topic' && !reverse" ng-class="{reverse: reverse}"></span>
+                <span class="fa fa-caret-down" ng-show="propertyName === 'topic' && reverse" ng-class="{reverse: reverse}"></span>
+            </th>
+            <th class="w3-blue" ng-click="sortBy('user.username')">Username
+                <span class="fa fa-caret-up" ng-show="propertyName === 'user.username' && !reverse" ng-class="{reverse: reverse}"></span>
+                <span class="fa fa-caret-down" ng-show="propertyName === 'user.username' && reverse" ng-class="{reverse: reverse}"></span>
+            </th>
+            <th class="w3-blue" ng-click="sortBy('answerCount')">Answers
+                <span class="fa fa-caret-up" ng-show="propertyName === 'answerCount' && !reverse" ng-class="{reverse: reverse}"></span>
+                <span class="fa fa-caret-down" ng-show="propertyName === 'answerCount' && reverse" ng-class="{reverse: reverse}"></span>
+            </th>
         </tr>
-        <tr ng-repeat='post in allPosts | filter: search | orderBy:sortType:sortReverse'>
+        <tr ng-repeat="post in allPosts | filter: search | orderBy:propertyName:reverse">
             <td ng-bind="post.category.name"></td>
             <td><a href="#!/topic/{{post._id}}">{{post.topic}}</a></td>
             <td><a href="/#!/user/{{post.user._id}}">{{post.user.username}}</a></td>

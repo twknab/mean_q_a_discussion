@@ -35,9 +35,9 @@ var UserSchema = new Schema (
             type: Schema.Types.ObjectId,
             ref: 'Answer'
         }],
-        responses: [{
+        comments: [{
             type: Schema.Types.ObjectId,
-            ref: 'Response'
+            ref: 'Comment'
         }],
     },
     {
@@ -108,8 +108,8 @@ UserSchema.methods.addAnswer = function(id) {
 };
 
 // Adds Response ID to user's response array:
-UserSchema.methods.addResponse = function(id) {
-    this.responses.push(id);
+UserSchema.methods.addComments = function(id) {
+    this.comments.push(id);
     this.save();
     return true;
 };
