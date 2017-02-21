@@ -26,15 +26,18 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
             $scope.getAnswers();
         },
         comment: function() {
-            $scope.newComment = {};
-            $scope.getComments();
+            // $scope.answer.newUserComment = {};
+            console.log($scope.allAnswers);
+            for (var i = 0; i < $scope.allAnswers.length; i++) {
+                $scope.allAnswers[i].newUserComment = {};
+                if (i == $scope.allAnswers.length - 1) {
+                    $scope.getAnswers();
+                }
+            };
         },
         commentError: function(err) {
             $scope.newCommentErrors = '';
             $scope.newCommentErrors = err;
-        },
-        getComments: function(commentsAndUsers) {
-            $scope.allComments = commentsAndUsers;
         },
     };
 
@@ -74,15 +77,16 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
         answerFactory.downVote({id: answer._id}, cb.downVote)
     };
 
-    // Create a Comment:
-    $scope.newComment = function() {
-        console.log($scope.responseComment);
-        answerFactory.newComment($scope.responseComment, cb.comment, cb.commentError);
+    $scope.newUserComment = {
+        "description" : {},
     };
 
-    // Show All Comments:
-    $scope.getComments = function() {
-        answerFactory.getComments(cb.getComments)
+    // Create a Comment:
+    $scope.newComment = function(answer) {
+        console.log(answer.newUserComment);
+        answer.newUserComment.answerID = answer._id;
+        console.log(answer.newUserComment.answerID);
+        answerFactory.newComment(answer.newUserComment, cb.comment, cb.commentError);
     };
 
 }]);

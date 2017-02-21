@@ -1,164 +1,32 @@
 #MEAN Discussion Board:
 
 ##Dashboard Page:
-	+ Search Box
 	+ Table:
-		+ Category
-		+ Topic (newest to oldest)
-		+ User name
-			+ Link to profile page
-		+ Posts
-			+ This counts # of posts (comments) for each topic
-	+ Add a new topic form:
-		+ Input Field: topic
-		+ Textfield: description
-		+ Category drop down (pre-choose 5 DB categories)
-		+ Button: 'Submit'
-	+ Clicking a topic brings you to the proper page
+		+ Column Sorting
 
 ##Topic Page:
-	+ `/#!/topic/:id`
-	+ Show post
-	+ Form:
-		+ Textfield: comment
-		+ Button: 'Comment'
-	+ Beneath comments, have up vote or down vote-ability
-	+ Clicking username redirects to that user's profile
+	+ Logout and Dashboard Links
 
 ##Profile Page:
-	+ `/#!/user/:id`
-	+ Show username
-	+ Dashboard Link
-	+ Logout Link
-	+ Text: Posted...
-		+ # of topics
-		+ # of Posts
-		+ # of comments
+	+ Logout and Dashboard Links
 
 ##Basic Questions to Start:
-
-	1. How many partials do you need?
-		Answer: 4 partials, 1 root HTML file
-
-	2. How many angular controllers do you need?
-		Answer: 4, one for each partial.
-
-	3. How many angular factories do you need?
-		Answer: 4, one for each partial (you could do all one but let's modularize)
-
-	4. How many server side controllers do you need?
-		Answer: 3, users, posts, comments. Note: you could do one controller if you really wanted
-		but modularizing seems like a good idea.
-
-	5. How many models do you need?
-		Answer: 4, `User`, `Post`, `Answer`, `Comment`
-
-	6. Define your models:
-		! Use Timestamps with all Models !:
-
-		`User`:
-			+ username: String,
-		`Post`:
-			+ title: String,
-			+ description: String,
-			+ category: Schema.Type.ObjID,
-				Note: This could be an array,
-				but if you want to keep it simple,
-				just keep it as such
-			+ posts: Number,
-				Note: This will be a number that will
-				be associated with how many comments
-				are created.
-		`Answer`:
-			+ description: String
-			+ user: Schema.Type.ObjID
-		`Comment`
-			+ description: String,
-			+ user: Schema.Type.ObjID,
-			+ post: Schema.Type.ObjID,
-			+ upVote: Number,
-			+ downVote: Number,
-
-	7. JSON Web Tokens:
-
-		1. Setup the app to use jwt packages:
-
-		`var expressJWT = require('express-jwt');`
-		`var jwt = require('jsonwebtoken');`
-
-		`app.use(expressJWT({
-			secret: 'mySecretPasscode123!',
-			})
-			.unless({
-				path: ['/login', '/api/cats']
-				// these routes will not need a JWT token
-			})
-		);`
-
-		2. In your routing, return the token:
-
-		`User.find({})
-			// (1) setup the token and pass payload and secret:
-			var myToken = jwt.sign({username: req.body.username}, 'mySecretPasscode123!')
-				// jwt.sign({{payload}}, {{secret}})
-				// {{secret}} must match secret in setup above.
-			// (2) send back token:
-			res.status(200).json(myToken);`
-
-		3. Create Authorization Header:
-
-		Must be in format:
-
-		`Authorization: Bearer <<long-concat-string>>`
-
-		See this page: https://docs.angularjs.org/api/ng/service/$http
-
-		For how to use $http service and look at the heading, 'Setting HTTP Headers'. Basically, in your $http response, you'll need to add in your headers an Authorization response.
-
-		`$http.defaults.headers.common.Authorization = "Bearer <<long-string>>"`
-
-		-or using $httpProvider-
-
-		`$httpProvider.defaults.headers.common.Authorization = "Bearer <<long-string>>"`
-
-	8. PassportJS:
-
-		http://passportjs.org/docs
-
-	9. Strategy:
-
-			- Get Login Form Working
-			- Get JWTs Working
-			- Get Passport Working
-			- Get Create Post Working
-			- Get Create Comment Working
-			- Get Show User Profile Working
+	+ JSON Web Tokens Acting Funky?
 
 
-##Questions During Development:
+##Still Need To (see above):
 
-	1. How do I get my JWT's to persist after login?
-
-		Right now, when you goto '/dashboard' without logging in or registering,
-		the lack of the JWT is triggered and the user is redirected to '/'.
-
-		However, even after logging in, despite the `/dashboard` page loading,
-		any page refresh will trigger the lack of JWT and re-load `/`
-
-		Question: Is there any way to persist the JWT so refresh does not redir?
-			(I believe you can set an expiration?)
-
-##Still Need To
-+ Need to add in sorting for categories and topics and username
+	+ Column sorting
+	+ Logout Nav Links / Dashboard Nav Links
+	+ JWTs acting weird?
 
 ##Where I Left Off:
 
-	+ Added comment form and iterated over comments but seems like some hiccup
-	is happening with the newComment form when trying to create a new comment.
-	I believe that it's due to `ng-model` on the comment form...Because we are
-	using `ng-repeat` with `answer`, I think your model has to change.
+	+ Commenting now working. Logged solution below. Now need to figure out
+	column sorting, and add the logout button and clean up any previous bugs.
+	Would be good to eventually refactor.
 
-##Issues Experienced During Development:
+###DEVELOPMENT ISSUES LOG:
 
 	1. Why are category drop downs disappearing when page reloads?
 
@@ -186,3 +54,66 @@
 		`ng-repeat="reply in comment.replies"` -- this way the second `ng-repeat`
 		is now a sub-component of the first. If you don't do this, Angular will
 		break and throw a weird error.
+
+		+ Solution: (BETTER): Hand the actual object into your $scope function,
+		ie,:
+
+		// Controller:
+		`$scope.newPost = function(post) {
+			console.log(post.newCommment)
+			// should print object with 'description' key value
+		}`
+
+		// HTML:
+		`<div ng-repeat="post in myPosts">
+			<h1>{{post.title}}</h1>
+			<p>Comment:</p>
+			<form ng-submit="newPost(post)">
+				<input type="text" ng-model="post.newComment.description">
+			</form>
+		</div>`
+
+	4. Don't move too far ahead. Build only one feature at a time. I tried to
+	build  a few features at once, and they all butted heads :(
+
+	5. Setting up JSON Web Tokens:
+
+		+	Setup the app to use jwt packages:
+
+				`var expressJWT = require('express-jwt');`
+				`var jwt = require('jsonwebtoken');`
+
+				`app.use(expressJWT({
+					secret: 'mySecretPasscode123!',
+					})
+					.unless({
+						path: ['/login', '/api/cats']
+						// these routes will not need a JWT token
+					})
+				);`
+
+		+ In your routing, return the token:
+
+				`User.find({})
+					// (1) setup the token and pass payload and secret:
+					var myToken = jwt.sign({username: req.body.username}, 'mySecretPasscode123!')
+						// jwt.sign({{payload}}, {{secret}})
+						// {{secret}} must match secret in setup above.
+					// (2) send back token:
+					res.status(200).json(myToken);`
+
+		+ Create Authorization Header:
+
+				Must be in format:
+
+				`Authorization: Bearer <<long-concat-string>>`
+
+				See this page: https://docs.angularjs.org/api/ng/service/$http
+
+				For how to use $http service and look at the heading, 'Setting HTTP Headers'. Basically, in your $http response, you'll need to add in your headers an Authorization response.
+
+				`$http.defaults.headers.common.Authorization = "Bearer <<long-string>>"`
+
+				-or using $httpProvider-
+
+				`$httpProvider.defaults.headers.common.Authorization = "Bearer <<long-string>>"`

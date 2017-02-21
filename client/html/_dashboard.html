@@ -10,10 +10,10 @@
         <tr>
             <th class="w3-blue">Category:</th>
             <th class="w3-blue">Topic:</th>
-            <th class="w3-blue">Username:</th>
-            <th class="w3-blue">Answers:</th>
+            <th class="w3-blue">Username <span class="fa fa-caret-down"></span><span class="fa fa-caret-up"></span></th>
+            <th class="w3-blue">Answers</th>
         </tr>
-        <tr ng-repeat='post in allPosts | filter: search'>
+        <tr ng-repeat='post in allPosts | filter: search | orderBy:sortType:sortReverse'>
             <td ng-bind="post.category.name"></td>
             <td><a href="#!/topic/{{post._id}}">{{post.topic}}</a></td>
             <td><a href="/#!/user/{{post.user._id}}">{{post.user.username}}</a></td>

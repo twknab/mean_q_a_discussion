@@ -173,6 +173,12 @@ module.exports = {
     getAllAnswers: function(req, res) {
         Answer.find({})
             .populate('user')
+            .populate({
+                path: 'comments',
+                populate: {
+                    path: 'user'
+                }
+            })
             .exec()
             .then(function(allAnswersAndUsers) {
                 return res.json(allAnswersAndUsers);
@@ -207,26 +213,20 @@ module.exports = {
     },
     // New Comment:
     newComment : function(req, res) {
-        console.log(req.body);
-        Comment.create(req.body.id)
+        Comment.create(req.body) // creatse comment
             .then(function(newComment) {
                 User.findOne({username: jwt.verify(myToken, 'mySecretPasscode123!').username})
                     .then(function(foundUser) {
-                        newComment.updateUser(foundUser._id);
-                        return res.json(newComment);
+                        console.log(foundUser._id);
+                        newComment.updateUser(foundUser._id); // adds user ID to comment
+                        console.log(req.body.answerID);
+                        newComment.addAnswer(req.body.answerID); // adds answer ID to Comment.answers array
+                        Answer.findOne({_id: req.body.answerID})
+                            .then(function(foundAnswer) {
+                                foundAnswer.addComment(newComment._id); // adds comment into Answer.comments array
+                                return res.json(newComment);
+                            })
                     })
-            })
-            .catch(function(err) {
-                return res.status(500).json(err);
-            })
-    },
-    // Get All Comments:
-    getAllComments : function(req, res) {
-        Comment.find({})
-            .populate('user')
-            .exec()
-            .then(function(allCommentsAndUsers) {
-                return res.json(allCommentsAndUsers)
             })
             .catch(function(err) {
                 return res.status(500).json(err);

@@ -22,6 +22,10 @@ var AnswerSchema = new Schema (
         downVotes: {
             type: Number,
         },
+        comments: [{
+            type: Schema.Types.ObjectId,
+            ref: 'Comment'
+        }],
     },
     {
         timestamps: true,
@@ -55,6 +59,13 @@ AnswerSchema.methods.downVote = function(){
 AnswerSchema.methods.updateUser = function(id){
     console.log('updating user...', id);
     this.user = id;
+    this.save();
+    return true;
+};
+
+AnswerSchema.methods.addComment = function(id){
+    console.log('pushing to comments array...', id);
+    this.comments.push(id);
     this.save();
     return true;
 };

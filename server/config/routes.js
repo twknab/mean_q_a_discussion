@@ -17,5 +17,5 @@ module.exports = function(app) {
         .post('/answer/vote/up/', Controller.upVote)
         .post('/answer/vote/down/', Controller.downVote)
         .post('/comment', Controller.newComment)
-        .get('/comment', Controller.getAllComments)
+        // .get('/comment', Controller.getAllComments)
 };

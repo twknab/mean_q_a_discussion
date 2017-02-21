@@ -73,19 +73,8 @@ app.factory('answerFactory', ['$http', function($http) {
                 commentCallback(newComment.data);
             })
             .catch(function(err) {
-                console.log(err.data);
-                commErrorCallback(err.data);
-            })
-    };
-
-    // Get Comments:
-    factory.getComments = function(getCommmentsCallback) {
-        $http.get('/comment')
-            .then(function(allCommentsAndUsers) {
-                getCommmentsCallback(allCommentsAndUsers.data);
-            })
-            .catch(function(err) {
                 console.log(err);
+                commErrorCallback(err.data);
             })
     };
 

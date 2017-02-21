@@ -16,6 +16,10 @@ var CommentSchema = new Schema (
             type: Schema.Types.ObjectId,
             ref: 'User'
         },
+        answer: {
+            type: Schema.Types.ObjectId,
+            ref: 'Answer'
+        },
     },
     {
         timestamps: true,
@@ -30,6 +34,15 @@ CommentSchema.methods.updateUser = function(id){
     console.log('updating user...', id);
     this.user = id;
     this.save();
+    console.log('done updating user...');
+    return true;
+};
+
+CommentSchema.methods.addAnswer = function(id){
+    console.log('adding answer...');
+    this.answer = id;
+    this.save();
+    console.log('done adding answer...');
     return true;
 };
 
