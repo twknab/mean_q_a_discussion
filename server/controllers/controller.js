@@ -103,6 +103,9 @@ module.exports = {
                         console.log(foundUser, '%%%%%%%%%');
                         return res.json(newPost);
                     })
+                    .catch(function(err) {
+                        return res.status(500).json(err);
+                    })
             })
             .catch(function(err) {
                 if (err.errors == null) {
@@ -168,6 +171,12 @@ module.exports = {
                                 // foundPost.addAnswer(newAnswer._id);
                                 return res.json(newAnswer);
                             })
+                            .catch(function(err) {
+                                return res.status(500).json(err);
+                            })
+                    })
+                    .catch(function(err) {
+                        return res.status(500).json(err);
                     })
             })
             .catch(function(err) {
@@ -197,23 +206,6 @@ module.exports = {
             .catch(function(err) {
                 return res.status(500).json(err);
             })
-        // Post.findOne({_id: req.body.postID})
-        //     .populate('user')
-        //     .populate({
-        //         path: 'answers',
-        //         populate: {
-        //             path: 'user'
-        //         }
-        //     })
-        //     .exec()
-        //     .then(function(allAnswersAndUsers) {
-        //                 console.log('%%% All Answers For Post %%%');
-        //                 console.log(allAnswersAndUsers);
-        //                 return res.json(allAnswersAndUsers);
-        //     })
-        //     .catch(function(err) {
-        //         return res.status(500).json(err);
-        //     })
     },
     // Up Vote:
     upVote : function(req, res) {
@@ -255,6 +247,12 @@ module.exports = {
                                 foundAnswer.addComments(newComment._id); // adds comment into Answer.comments array
                                 return res.json(newComment);
                             })
+                            .catch(function(err) {
+                                return res.json(err);
+                            })
+                    })
+                    .catch(function(err) {
+                        return res.status(500).json(err);
                     })
             })
             .catch(function(err) {
