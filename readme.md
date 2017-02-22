@@ -2,17 +2,11 @@
 ##Still Need To (see above):
 
 	+ JWTs acting weird?
-	+ Same `Answers` for all Posts/Topics?
 
 ##Where I Left Off:
 
-	+ Got column sorting and logout/dashboard buttons done. JWTs still acting weird
-	and now same answers seem to be showing for EVERY post -- there are some issues
-	likely in the way that things are being grabbed from the DB.
-
 		Summary:
 
-			1) Look at issues about all answers being the same
 			2) Understand why JWTs aren't working
 			3) Any other cleanup or improvements?
 

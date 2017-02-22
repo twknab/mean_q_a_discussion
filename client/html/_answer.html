@@ -52,10 +52,14 @@
             <h3>Answer:</h3>
         </div>
         <div class="w3-margin-left inline-block">
-            <span class="w3-badge w3-green">{{answer.upVotes}}</span>
-            <i class="fa fa-arrow-up" aria-hidden="true" ng-click="upVote(answer)"></i>
-            <span class="w3-badge w3-red">{{answer.downVotes}}</span>
-            <i class="fa fa-arrow-down" aria-hidden="true" ng-click="downVote(answer)"></i>
+            <span ng-click="upVote(answer)">
+                <span class="w3-badge w3-green">{{answer.upVotes}}</span>
+                <i class="fa fa-arrow-up" aria-hidden="true"></i>
+            </span>
+            <span ng-click="downVote(answer)">
+                <span class="w3-badge w3-red">{{answer.downVotes}}</span>
+                <i class="fa fa-arrow-down" aria-hidden="true"></i>
+            </span>
         </div>
         <p class="w3-margin w3-padding-16 inline-block"><b><a href="#!/user/{{answer.user._id}}">{{answer.user.username}}</a></b>: {{answer.description}}</p>
             <!-- container to hold all comments -->

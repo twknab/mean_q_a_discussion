@@ -67,7 +67,7 @@ AnswerSchema.methods.updateUser = function(id){
     return true;
 };
 
-AnswerSchema.methods.addComment = function(id){
+AnswerSchema.methods.addComments = function(id){
     console.log('pushing to comments array...', id);
     this.comments.push(id);
     this.save();

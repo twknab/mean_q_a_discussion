@@ -15,9 +15,9 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
             $scope.newAnswerErrors = '';
             $scope.newAnswerErrors = err;
         },
-        getAnswers: function(allAnswersAndUsers) {
-            console.log(allAnswersAndUsers);
-            $scope.allAnswers = allAnswersAndUsers;
+        getAnswers: function(answersCommentsAndUsers) {
+            console.log(answersCommentsAndUsers);
+            $scope.allAnswers = answersCommentsAndUsers;
         },
         upVote: function() {
             $scope.getAnswers();
@@ -25,9 +25,9 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
         downVote: function() {
             $scope.getAnswers();
         },
-        comment: function() {
-            // $scope.answer.newUserComment = {};
-            console.log($scope.allAnswers);
+        comment: function(newComment) {
+            console.log(newComment);
+            // console.log($scope.allAnswers);
             for (var i = 0; i < $scope.allAnswers.length; i++) {
                 $scope.allAnswers[i].newUserComment = {};
                 if (i == $scope.allAnswers.length - 1) {
@@ -54,19 +54,19 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
     // Get Post/Topic on partial load:
     $scope.getPost();
 
-    // Create a new Answer:
+    // Create New Answer:
     $scope.newAnswer = function(post) {
         $scope.answerData = {
             description: $scope.answer.description,
             postID: post._id,
         };
-        console.log($scope.answerData);
         answerFactory.newAnswer($scope.answerData, cb.answer, cb.newAnswerError);
     };
 
     // Get All Answers:
     $scope.getAnswers = function() {
-        answerFactory.getAnswers(cb.getAnswers);
+        console.log('getting answers...', $routeParams.id);
+        answerFactory.getAnswers({postID: $routeParams.id}, cb.getAnswers);
     };
 
     // Get All Answers on page load:
@@ -84,10 +84,6 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
         console.log('down voting...');
         console.log(answer._id);
         answerFactory.downVote({id: answer._id}, cb.downVote)
-    };
-
-    $scope.newUserComment = {
-        "description" : {},
     };
 
     // Create a Comment:

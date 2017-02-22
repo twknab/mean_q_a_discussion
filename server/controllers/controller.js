@@ -158,13 +158,14 @@ module.exports = {
             .then(function(newAnswer) {
                 User.findOne({username: jwt.verify(myToken, 'mySecretPasscode123!').username})
                     .then(function(foundUser) {
+                        foundUser.addAnswer(newAnswer._id); // add answer ID to user array
                         newAnswer.updateUser(foundUser._id); // add user ID to answer
                         newAnswer.initVote(); // initialize up and down votes at 0
                         newAnswer.updatePostID(req.body.postID); // adds postID to answer
-                        foundUser.addAnswer(newAnswer._id); // add answer ID to user array
                         Post.findOne({_id: req.body.postID})
                             .then(function(foundPost) {
                                 foundPost.increaseAnswerCount();
+                                // foundPost.addAnswer(newAnswer._id);
                                 return res.json(newAnswer);
                             })
                     })
@@ -177,23 +178,42 @@ module.exports = {
                 };
             })
     },
-    // Get all Answers:
-    getAllAnswers: function(req, res) {
-        Answer.find({})
+    // Get Post Answers:
+    getPostAnswers: function(req, res) {
+        console.log('server controller talking...', req.body);
+        Answer.find({post: req.body.postID})
             .populate('user')
             .populate({
                 path: 'comments',
                 populate: {
-                    path: 'user'
-                }
+                    path: `user`
+                },
             })
             .exec()
-            .then(function(allAnswersAndUsers) {
-                return res.json(allAnswersAndUsers);
+            .then(function(answersCommentsAndUsers) {
+                console.log(answersCommentsAndUsers);
+                return res.json(answersCommentsAndUsers);
             })
             .catch(function(err) {
                 return res.status(500).json(err);
             })
+        // Post.findOne({_id: req.body.postID})
+        //     .populate('user')
+        //     .populate({
+        //         path: 'answers',
+        //         populate: {
+        //             path: 'user'
+        //         }
+        //     })
+        //     .exec()
+        //     .then(function(allAnswersAndUsers) {
+        //                 console.log('%%% All Answers For Post %%%');
+        //                 console.log(allAnswersAndUsers);
+        //                 return res.json(allAnswersAndUsers);
+        //     })
+        //     .catch(function(err) {
+        //         return res.status(500).json(err);
+        //     })
     },
     // Up Vote:
     upVote : function(req, res) {
@@ -221,17 +241,18 @@ module.exports = {
     },
     // New Comment:
     newComment : function(req, res) {
-        Comment.create(req.body) // creatse comment
+        Comment.create(req.body) // create comment
             .then(function(newComment) {
+                console.log('$$$$: ', newComment);
                 User.findOne({username: jwt.verify(myToken, 'mySecretPasscode123!').username})
                     .then(function(foundUser) {
                         console.log(foundUser._id);
+                        foundUser.addComments(newComment._id);
                         newComment.updateUser(foundUser._id); // adds user ID to comment
                         newComment.addAnswer(req.body.answerID); // adds answer ID to Comment.answers array
-                        foundUser.addComments(newComment._id);
                         Answer.findOne({_id: req.body.answerID})
                             .then(function(foundAnswer) {
-                                foundAnswer.addComment(newComment._id); // adds comment into Answer.comments array
+                                foundAnswer.addComments(newComment._id); // adds comment into Answer.comments array
                                 return res.json(newComment);
                             })
                     })

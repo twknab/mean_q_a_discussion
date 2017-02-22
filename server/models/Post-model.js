@@ -29,7 +29,11 @@ var PostSchema = new Schema (
         },
         answerCount: {
             type: Number,
-        }
+        },
+        // answers: [{
+        //     type: Schema.Types.ObjectId,
+        //     ref: 'Answer',
+        // }],
     },
     {
         timestamps: true,
@@ -58,6 +62,14 @@ PostSchema.methods.initAnswerCount = function(){
     this.save();
     return true;
 };
+
+// PostSchema.methods.addAnswer = function(id) {
+//     console.log('$$ BEFORE $$: ', this.answers);
+//     this.answers.push(id);
+//     this.save();
+//     console.log('$$ AFTER $$: ', this.answers);
+//     return true;
+// };
 
 /*************************/
 /*  PRE SAVE MIDDLEWARE  */

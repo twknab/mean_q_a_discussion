@@ -6,9 +6,9 @@ app.factory('answerFactory', ['$http', function($http) {
     factory.getPost = function(id, showPostCallback) {
         console.log('Factory');
         $http.get('/post/' + id)
-            .then(function(foundPostAndUser) {
-                console.log(foundPostAndUser.data);
-                showPostCallback(foundPostAndUser.data);
+            .then(function(postAndUser) {
+                console.log(postAndUser.data);
+                showPostCallback(postAndUser.data);
             })
             .catch(function(err) {
                 console.log(err.data);
@@ -17,10 +17,9 @@ app.factory('answerFactory', ['$http', function($http) {
 
     // Create New Answer:
     factory.newAnswer = function(answerData, answerCallback, errorCallback) {
-        console.log('factory running...');
-        console.log(answerData);
         $http.post('/answer/', answerData)
             .then(function(newAnswer) {
+                console.log('$$$$$$ NEW ANSWER $$$$$$$');
                 console.log(newAnswer);
                 answerCallback(newAnswer.data);
             })
@@ -30,10 +29,12 @@ app.factory('answerFactory', ['$http', function($http) {
     };
 
     // Get All Answers:
-    factory.getAnswers = function(getAnswersCallback) {
-        $http.get('/answer/')
-            .then(function(allAnswersAndUsers) {
-                getAnswersCallback(allAnswersAndUsers.data);
+    factory.getAnswers = function(postID, getAnswersCallback) {
+        console.log('getting answers for this post...', postID);
+        $http.post('/post/answer', postID)
+            .then(function(answersCommentsAndUsers) {
+                console.log(answersCommentsAndUsers.data);
+                getAnswersCallback(answersCommentsAndUsers.data);
             })
             .catch(function(err) {
                 console.log(err.data)
@@ -72,6 +73,7 @@ app.factory('answerFactory', ['$http', function($http) {
     factory.newComment = function(comment, commentCallback, commErrorCallback) {
         $http.post('/comment', comment)
             .then(function(newComment) {
+                console.log('$$$ New Comment Returned:', newComment);
                 commentCallback(newComment.data);
             })
             .catch(function(err) {
