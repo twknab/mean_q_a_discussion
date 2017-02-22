@@ -17,5 +17,9 @@
     "jsonwebtoken": "^7.3.0",
     "mongoose": "^4.8.1",
     "passport": "^0.3.2"
+  },
+  "repository": {
+  "type": "git",
+  "url": "https://github.com/timothyknab/mean_discussion.git"
   }
 }
