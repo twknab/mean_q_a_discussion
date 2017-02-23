@@ -2,7 +2,19 @@ app.factory('indexFactory', ['$http', function($http) {
     // Setup Factory Object:
     var factory = {};
 
-    // login:
+    // Create categories:
+    factory.categories = function() {
+        $http.post('/post/categories')
+            .then(function(message) {
+                console.log(message.data);
+            })
+            .catch(function(err) {
+                console.log(err);
+                console.log('Error from DB:', err.data);
+            })
+    };
+
+    // Login:
     factory.login = function(user, loginCallback, errorsCallback) {
         console.log('Factory talking...', user);
         $http.post('/login', user)
@@ -18,7 +30,7 @@ app.factory('indexFactory', ['$http', function($http) {
             })
     };
 
-    // register:
+    // Register:
     factory.register = function(newUser, registerCallback, errorsCallback) {
         console.log('Factory talking...', newUser);
         $http.post('/register', newUser)

@@ -9,18 +9,26 @@ var Post = require('mongoose').model('Post');
 var Answer = require('mongoose').model('Answer');
 var Comment = require('mongoose').model('Comment');
 
-// Create 5 Categories:
-console.log(Category.find({}));
-if (!Category.find({})) {
-    Category.create({name: 'General'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-    Category.create({name: 'JavaScript'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-    Category.create({name: 'Python'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-    Category.create({name: 'Database Design'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-    Category.create({name: 'OOP'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-}
-
 // Create our Controller Methods:
 module.exports = {
+
+    // Create Categories:
+    createCategories: function(req, res) {
+        // Create 5 Categories:
+        console.log(Category.find({}));
+        if (!Category.find({})) {
+            Category.create({name: 'General'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+            Category.create({name: 'JavaScript'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+            Category.create({name: 'Python'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+            Category.create({name: 'Database Design'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+            Category.create({name: 'OOP'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+            console.log('5 categories now created...');
+            res.json('Categories successfully created.');
+        } else {
+            console.log('Categories already exist...');
+            res.json('Categories alreay exist.');
+        }
+    }
 
     // Login a User:
     login: function(req, res) {

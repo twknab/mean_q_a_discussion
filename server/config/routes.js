@@ -8,6 +8,7 @@ module.exports = function(app) {
         .post('/login', Controller.login)
         .get('/login', Controller.getLoggedIn)
         .get('/post/categories', Controller.getCategories)
+        .post('/post/categories', Controller.createCategories)
         .post('/post', Controller.newPost)
         .get('/post', Controller.getAllPosts)
         .get('/post/:id', Controller.getPost)
