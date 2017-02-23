@@ -81,6 +81,7 @@ module.exports = {
     },
     // Get Categories:
     getCategories: function(req, res) {
+        console.log('getting all categories...');
         Category.find({})
             .then(function(allCategories) {
                 console.log(allCategories);

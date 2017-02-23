@@ -7,6 +7,7 @@ app.controller('dashboardController', ['$scope', 'dashboardFactory', '$location'
             $scope.user = user;
         },
         getCategories: function(categories) {
+            console.log('getting categories...');
             $scope.categories = categories;
         },
         post: function(newPost) {
