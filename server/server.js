@@ -13,7 +13,7 @@ require('./config/app')(express, app, bodyParser, path, expressJWT, jwt);
 // Setup Mongoose and Models:
 require('./config/db');
 
-// Setup Custom Mongoose Middleware (if using):
+// Setup Custom Middleware (if using):
 require('./middleware/user')(app);
 
 // Setup Server-Side Routing:

@@ -3,6 +3,10 @@ module.exports = function(app){
     app.use(function(req, res, next) {
         var User = require('mongoose').model('User')
 
+        // How to Improve JWTs:
+        // Change the below Session information in your Middlware to utilize
+        // your JWT's instead.. =)
+
         // if (req.session.userID) {
         //     User.findById(req.session.userID)
         //         .then(function(user) {
