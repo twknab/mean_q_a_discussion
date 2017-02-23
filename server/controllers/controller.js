@@ -10,6 +10,7 @@ var Answer = require('mongoose').model('Answer');
 var Comment = require('mongoose').model('Comment');
 
 // Create 5 Categories:
+console.log(Category.find({}));
 if (!Category.find({})) {
     Category.create({name: 'General'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
     Category.create({name: 'JavaScript'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
