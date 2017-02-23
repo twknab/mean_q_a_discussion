@@ -23,11 +23,15 @@ app.controller('indexController', ['$scope', 'indexFactory', '$location', '$rout
         },
     };
 
+
     // Create Categories:
     $scope.categories = function() {
         console.log('Login Process: Angular controller running...', $scope.user);
         indexFactory.categories();
     };
+
+    // Run Categories Creation on Page Load:
+    $scope.categories();
 
     // Login User:
     $scope.login = function() {

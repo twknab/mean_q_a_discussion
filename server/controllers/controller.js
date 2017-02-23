@@ -14,20 +14,28 @@ module.exports = {
 
     // Create Categories:
     createCategories: function(req, res) {
-        // Create 5 Categories:
-        console.log(Category.find({}));
-        if (!Category.find({})) {
-            Category.create({name: 'General'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-            Category.create({name: 'JavaScript'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-            Category.create({name: 'Python'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-            Category.create({name: 'Database Design'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-            Category.create({name: 'OOP'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-            console.log('5 categories now created...');
-            res.json('Categories successfully created.');
-        } else {
-            console.log('Categories already exist...');
-            res.json('Categories alreay exist.');
-        }
+        // Create 5 Categories
+        Category.find({})
+            .then(function(categories){
+                console.log('%%%%', categories.length);
+                if (categories.length < 1) {
+                    Category.create({name: 'General'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+                    Category.create({name: 'JavaScript'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+                    Category.create({name: 'Python'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+                    Category.create({name: 'Database Design'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+                    Category.create({name: 'OOP'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+                    console.log('5 categories now created...');
+                    return res.json('Categories successfully created.');
+                } else {
+                    console.log('Categories already exist...');
+                    return res.json('Categories alreay exist.');
+                }
+            })
+            .catch(function(err) {
+                console.log(err);
+                return res.status(500).json(err);
+            })
+
     },
 
     // Login a User:
