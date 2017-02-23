@@ -3,3 +3,6 @@ node_modules
 
 # ignore bower_components folder:
 bower_components
+
+# for Mac:
+.DS_Store
