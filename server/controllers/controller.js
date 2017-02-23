@@ -28,7 +28,7 @@ module.exports = {
             console.log('Categories already exist...');
             res.json('Categories alreay exist.');
         }
-    }
+    },
 
     // Login a User:
     login: function(req, res) {
