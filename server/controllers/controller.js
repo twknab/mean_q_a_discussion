@@ -9,6 +9,14 @@ var Post = require('mongoose').model('Post');
 var Answer = require('mongoose').model('Answer');
 var Comment = require('mongoose').model('Comment');
 
+// Create 5 Categories:
+Category.create({name: 'General'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+Category.create({name: 'JavaScript'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+Category.create({name: 'Python'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+Category.create({name: 'Database Design'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+Category.create({name: 'OOP'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+
+// Create our Controller Methods:
 module.exports = {
 
     // Login a User:
