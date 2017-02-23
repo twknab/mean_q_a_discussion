@@ -17,13 +17,13 @@ module.exports = {
         // Create 5 Categories
         Category.find({})
             .then(function(categories){
-                console.log('%%%%', categories.length);
+                console.log('Checking # of categories:', categories.length);
                 if (categories.length < 1) {
                     Category.create({name: 'General'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
                     Category.create({name: 'JavaScript'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
                     Category.create({name: 'Python'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-                    Category.create({name: 'Database Design'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-                    Category.create({name: 'OOP'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+                    Category.create({name: 'Ruby'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
+                    Category.create({name: 'PHP'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
                     console.log('5 categories now created...');
                     return res.json('Categories successfully created.');
                 } else {
