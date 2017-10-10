@@ -1,38 +1,18 @@
 # About
-This is a message and comment-style discussion board powered by MEAN stack.
+This is a programming Question and Answer discussion board powered by MEAN stack using JSON Web Tokens. W3.CSS is used to style the front end, as a lightweight alternative to bootstrap.
 
-## Issues:
+Additionally Features:
+- Question table can be sorted by various column headings.
+- Answers can be up voted or down voted.
+
+## Some Issues:
 
 	+ JWTs seem to time out quicker than something like session. What's going on here?
-
-## Where I Left Off:
-
-		Summary:
-
-			2) Understand JWT issues.
-			3) Other cleanup issues.
+	+ See if you can refactor/cleanup code.
 
 ### Dev Issues Log (recorded for learning purposes):
 
-	1. Why are category drop downs disappearing when page reloads?
-
-		+ Solution: Your `/post/categories` route was being blocked by
-		your JWT tokens. Thus, when you refreshed the page, your categories
-		were not retrieved. To solve this, an exception was added in the JWT
-		setup under your `app.js`, and now your categories load on page refresh.
-
-	2. Why did my links in the format of `/user/{{user._id}}` give me a
-	'Cannot Get' error?
-
-		+ Solution: You forgot the hashbang -- this `#!` must go before your links.
-		The link style of, `/#!/user/{{user._id}}` will *NOT* trigger this error.
-
-		+ Also remember: When you're using the `$http` request in your factory,
-		format your request as: `$http.get('/user' + id)` -- use the `+` to add
-		the `id` onto your route (make sure to pass `id` in from `$routeParams.id`
-		from your controller and to your factory).
-
-	3. Nested use of `ng-repeat`:
+	- Nested use of `ng-repeat`:
 
 		+ Solution: Be sure to make the second repeat a property of the first
 		repeat. IE, `ng-repeat="comment in comments"` with a nested repeat as,
@@ -59,10 +39,7 @@ This is a message and comment-style discussion board powered by MEAN stack.
 			</form>
 		</div>`
 
-	4. Don't move too far ahead. Build only one feature at a time. I tried to
-	build  a few features at once, and they all butted heads :(
-
-	5. Setting up JSON Web Tokens:
+	- Setting up JSON Web Tokens:
 
 		+	Setup the app to use jwt packages:
 
@@ -104,7 +81,7 @@ This is a message and comment-style discussion board powered by MEAN stack.
 
 				`$httpProvider.defaults.headers.common.Authorization = "Bearer <<long-string>>"`
 
-	6. Column Arranging and Sorting: This one was complicated, but how do you toggle the sorting of a column?
+	- Column Arranging and Sorting: This one was complicated, but how do you toggle the sorting of a column?
 	If you look at `/_dashboard.html` and the `angular-dashboard-controller`, you'll see that we use a few scope
 	functions and some usages of `ng-click` and `ng-class`, along with a `<span>` to get our display to work properly.
 
