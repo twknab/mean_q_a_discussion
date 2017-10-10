@@ -1,16 +1,18 @@
+# About
+This is a message and comment-style discussion board powered by MEAN stack.
 
-##Still Need To (see above):
+## Issues:
 
-	+ JWTs acting weird?
+	+ JWTs seem to time out quicker than something like session. What's going on here?
 
 ##Where I Left Off:
 
 		Summary:
 
-			2) Understand why JWTs aren't working
-			3) Any other cleanup or improvements?
+			2) Understand JWT issues.
+			3) Other cleanup issues.
 
-###DEVELOPMENT ISSUES LOG:
+### Dev Issues Log (recorded for learning purposes):
 
 	1. Why are category drop downs disappearing when page reloads?
 
