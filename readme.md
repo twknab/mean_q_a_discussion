@@ -5,7 +5,7 @@ This is a message and comment-style discussion board powered by MEAN stack.
 
 	+ JWTs seem to time out quicker than something like session. What's going on here?
 
-##Where I Left Off:
+## Where I Left Off:
 
 		Summary:
 
