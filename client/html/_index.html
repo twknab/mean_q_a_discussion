@@ -7,20 +7,28 @@
         <h3>{{error.message}}</h3>
     </div>
     <!-- Login Form -->
-    <form ng-submit="login()" class="w3-container">
+    <form ng-submit="login()" class="w3-container w3-text-blue">
         <p>
             <!-- Username Field -->
-            <input type="text" name="username" id="username" ng-model="user.username" class="w3-input">
-            <label for="username">Username</label>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+              <div class="w3-rest">
+                  <input type="text" name="username" id="username" ng-model="user.username" class="w3-input" placeholder="Username">
+              </div>
+            </div>
         </p>
         <p>
             <!-- Password Field -->
-            <input type="password" name="password" id="password" ng-model="user.password" class="w3-input">
-            <label for="password">Password</label>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-lock"></i></div>
+              <div class="w3-rest">
+                <input type="password" name="password" id="password" ng-model="user.password" class="w3-input" placeholder="Password">
+              </div>
+            </div>
         </p>
         <p>
             <!-- Button -->
-            <input type="submit" value="Login" class="w3-button w3-blue">
+            <input type="submit" value="Login" class="w3-button w3-large w3-blue">
         </p>
     </form>
 </div>
@@ -33,30 +41,46 @@
         <h3>{{error.message}}</h3>
     </div>
     <!-- Registration Form -->
-    <form ng-submit="register()" class="w3-container">
+    <form ng-submit="register()" class="w3-container w3-text-red">
         <p>
             <!-- Username Field -->
-            <input type="text" name="username" id="username" ng-model="newUser.username" class="w3-input">
-            <label for="username">Username</label>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i></div>
+              <div class="w3-rest">
+                <input type="text" name="username" id="username" ng-model="newUser.username" class="w3-input" placeholder="Username">
+              </div>
+            </div>
         </p>
         <p>
             <!-- Email Field -->
-            <input type="email" name="email" id="email" ng-model="newUser.email" class="w3-input">
-            <label for="email">Email</label>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-at"></i></div>
+              <div class="w3-rest">
+                <input type="email" name="email" id="email" ng-model="newUser.email" class="w3-input" placeholder="Email">
+              </div>
+            </div>
         </p>
         <p>
             <!-- Password Field -->
-            <input type="password" name="password" id="password" ng-model="newUser.password" class="w3-input">
-            <label for="password">Password</label>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-lock"></i></div>
+              <div class="w3-rest">
+                <input type="password" name="password" id="password" ng-model="newUser.password" class="w3-input" placeholder="Choose Password">
+              </div>
+            </div>
         </p>
         <p>
             <!-- Confirm Password Field -->
-            <input type="password" name="password_confirm" id="password_confirm" ng-model="newUser.password_confirm" class="w3-input">
-            <label for="password_confirm">Password Confirm</label>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-lock"></i></div>
+              <div class="w3-rest">
+                <input type="password" name="password_confirm" id="password_confirm" ng-model="newUser.password_confirm" class="w3-input" placeholder="Confirm Password">
+              </div>
+            </div>
         </p>
         <p>
             <!-- Button -->
-            <input type="submit" value="Register" class="w3-button w3-red">
+            <input type="submit" value="Register" class="w3-button w3-large w3-red">
         </p>
     </form>
 </div>

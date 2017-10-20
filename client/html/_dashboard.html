@@ -1,8 +1,13 @@
 <h2 class="w3-margin-left"><b>Hello, {{user.username}}!</b></h2>
-<form class="w3-container">
-    <input type="text" ng-model="search" class="w3-input w3-border w3-margin-bottom" placeholder="search...">
+<button class="w3-bar-item w3-button w3-large w3-light-grey w3-text-shadow w3-margin-top w3-margin-right w3-margin-bottom w3-margin-left w3-right" ng-click="logout()" ng-controller="userController">Logout</button>
+<form class="w3-container w3-text-grey">
+  <div class="w3-row w3-section">
+    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-search"></i></div>
+    <div class="w3-rest">
+      <input type="text" ng-model="search" class="w3-input w3-border w3-margin-bottom" placeholder="Search...">
+    </div>
+  </div>
 </form>
-<button class="w3-bar-item w3-button w3-light-grey w3-text-shadow w3-margin-top w3-margin-right w3-margin-bottom w3-margin-left w3-right" ng-click="logout()" ng-controller="userController">Logout</button>
 <div class="w3-container">
     <div class="w3-container w3-blue">
         <h2>Post Topics:</h2>
@@ -46,27 +51,39 @@
         <h3>{{error.message}}</h3>
     </div>
     <!-- Form -->
-    <form ng-submit="newPost()" class="w3-container">
+    <form ng-submit="newPost()" class="w3-container w3-text-blue">
         <p>
             <!-- Topic Field -->
-            <input type="text" name="topic" id="topic" ng-model="post.topic" class="w3-input">
-            <label for="topic">Topic</label>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-question"></i></div>
+              <div class="w3-rest">
+                <input type="text" name="topic" id="topic" ng-model="post.topic" class="w3-input" placeholder="Topic">
+              </div>
+            </div>
         </p>
         <p>
             <!-- Description Field -->
-            <textarea name="description" id="description" cols="50" rows="10" ng-model="post.description" class="w3-input"></textarea>
-            <label for="description"> Description</label>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-newspaper-o"></i></div>
+              <div class="w3-rest">
+                <textarea name="description" id="description" cols="50" rows="10" ng-model="post.description" class="w3-input" placeholder="Description"></textarea>
+              </div>
+            </div>
         </p>
         <p>
             <!-- Category Select Field -->
-            <select name="postCategory" id="postCategory" ng-model="post.category" class="w3-select w3-border">
-                <option ng-repeat="category in categories" value="{{category._id}}">{{category.name}}</option>
-            </select>
-            <label for="postCategory">Category</label>
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-angle-double-right"></i></div>
+              <div class="w3-rest">
+                <select name="postCategory" id="postCategory" ng-model="post.category" ng-options="category._id as category.name for category in categories" class="w3-select w3-border margin-top-sm">
+                    <option value="">Choose a Category...</option>
+                </select>
+              </div>
+            </div>
         </p>
         <p>
             <!-- Button -->
-            <input type="submit" value="Submit">
+            <input type="submit" class="w3-large" value="Submit">
         </p>
     </form>
 </div>

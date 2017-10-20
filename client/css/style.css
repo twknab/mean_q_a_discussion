@@ -27,6 +27,13 @@
   content: '\25bc';
 }
 
+.margin-top-sm {
+  margin-top: 8px;
+}
+
+.w3-card-4 .comment-card {
+  box-shadow: none !important;
+}
 /*************************/
 /*    RESPONSIVENESS:    */
 /*************************/

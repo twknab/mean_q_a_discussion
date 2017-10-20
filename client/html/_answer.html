@@ -1,25 +1,40 @@
 <div class="w3-display-container w3-right">
-    <button class="w3-bar-item w3-button w3-blue w3-text-shadow" ng-click="dashboard()">Dashboard</button>
-    <button class="w3-bar-item w3-button w3-light-grey w3-text-shadow w3-margin-top w3-margin-right w3-margin-bottom" ng-click="logout()">Logout</button>
+    <button class="w3-bar-item w3-button w3-large w3-blue w3-text-shadow" ng-click="dashboard()">Dashboard</button>
+    <button class="w3-bar-item w3-button w3-large w3-light-grey w3-text-shadow w3-margin-top w3-margin-right w3-margin-bottom" ng-click="logout()">Logout</button>
 </div>
 <div class="w3-container">
-    <div class="w3-container w3-blue">
-        <h3>Question:</h3>
-    </div>
-    <div class="w3-card-4">
-        <div class="w3-panel w3-leftbar w3-sand w3-large">
-            <h4><a href="#!/user/{{post.user._id}}">{{post.user.username}}</a> posted:</h4>
-            <p class="w3-margin-left">
+  <div class="w3-card-4 w3-padding-bottom">
+      <div class="w3-container w3-blue">
+          <h3>Question:</h3>
+      </div>
+      <div class="w3-panel w3-leftbar w3-sand w3-large w3-padding-bottom w3-margin-left w3-margin-right w3-margin-bottom">
+          <div class="w3-row w3-section">
+            <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user w3-text-grey"></i></div>
+            <div class="w3-rest">
+              <h4><a href="#!/user/{{post.user._id}}">{{post.user.username}}</a> posted:</h4>
+            </div>
+          </div>
+          <p class="w3-margin-left">
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-question w3-text-grey"></i></div>
+              <div class="w3-rest margin-top-sm">
                 <b>{{post.topic}}</b>
-            </p>
-            <p class="w3-margin-left">
+              </div>
+            </div>
+          </p>
+          <p class="w3-margin-left">
+            <div class="w3-row w3-section">
+              <div class="w3-col" style="width:50px"><i class="w3-xlarge fa fa-newspaper-o w3-text-grey"></i></div>
+              <div class="w3-rest">
                 {{post.description}}
-            </p>
-        </div>
-    </div>
+              </div>
+            </div>
+          </p>
+      </div>
+  </div>
 </div>
 <!-- New Answer Container -->
-<div class="w3-card-4 w3-margin">
+<div class="w3-card-4 w3-margin w3-padding-bottom">
     <!-- Container Title -->
     <div class="w3-container w3-red">
         <h3>Post an Answer:</h3>
@@ -32,12 +47,11 @@
     <form ng-submit="newAnswer(post)" class="w3-container">
         <p>
             <!-- Description Field -->
-            <textarea name="description" id="description" cols="50" rows="10" ng-model="answer.description" class="w3-input"></textarea>
-            <label for="description">Answer</label>
+            <textarea name="description" id="description" cols="50" rows="10" ng-model="answer.description" class="w3-input" placeholder="Your Answer"></textarea>
         </p>
         <p>
             <!-- Button -->
-            <input type="submit" value="Post Answer">
+            <input type="submit" class="w3-large" value="Post Answer">
         </p>
     </form>
 </div>
@@ -47,39 +61,41 @@
         <div class="w3-container w3-blue">
             <h3>Answer:</h3>
         </div>
-        <div class="w3-margin-left inline-block">
+        <div class="w3-margin-left w3-margin-top inline-block">
             <span ng-click="upVote(answer)">
                 <span class="w3-badge w3-green">{{answer.upVotes}}</span>
-                <i class="fa fa-arrow-up" aria-hidden="true"></i>
+                <i class="w3-large fa fa-arrow-up" aria-hidden="true"></i>
             </span>
             <span ng-click="downVote(answer)">
                 <span class="w3-badge w3-red">{{answer.downVotes}}</span>
-                <i class="fa fa-arrow-down" aria-hidden="true"></i>
+                <i class="w3-large fa fa-arrow-down" aria-hidden="true"></i>
             </span>
         </div>
-        <p class="w3-margin w3-padding-16 inline-block"><b><a href="#!/user/{{answer.user._id}}">{{answer.user.username}}</a></b>: {{answer.description}}</p>
+        <p class="w3-margin w3-padding-16 inline-block"><i class="w3-xlarge fa fa-comment w3-text-grey"></i> <b><a href="#!/user/{{answer.user._id}}">{{answer.user.username}}</a></b>: {{answer.description}}</p>
             <!-- container to hold all comments -->
-            <div class="w3-margin-left padding-left w3-margin-bottom" ng-repeat="comment in answer.comments">
-                <p><a href="#!/users/{{comment.user._id}}"><b>{{comment.user.username}}</b></a>: {{comment.description}}</p>
+            <div class="w3-margin-left padding-left w3-padding-bottom" ng-repeat="comment in answer.comments">
+                <p class="w3-padding-right"><i class="w3-xlarge fa fa-comment-o w3-text-grey"></i> <a href="#!/users/{{comment.user._id}}"><b>{{comment.user.username}}</b></a>: {{comment.description}}</p>
             </div>
-            <div class="w3-container w3-red w3-margin">
-                <h5>Post a Comment:</h5>
-            </div>
-            <!-- Errors -->
-            <div ng-repeat="commentError in answer.newCommentErrors" class="error w3-margin">
-                <h3>{{commentError.message}}</h3>
-            </div>
-            <!-- Form -->
-            <form ng-submit="newComment(answer)" class="w3-margin w3-padding-8">
-                <p>
+
+            <div class="w3-card-4 w3-margin comment-card w3-padding-bottom">
+                <div class="w3-container w3-red">
+                    <h5>Post a Comment</h5>
+                </div>
+                <!-- Errors -->
+                <div ng-repeat="commentError in answer.newCommentErrors" class="error w3-margin">
+                  <h3>{{commentError.message}}</h3>
+                </div>
+                <!-- Form -->
+                <form ng-submit="newComment(answer)" class="w3-margin-left w3-margin-right w3-padding-8">
+                  <p>
                     <!-- Description Field -->
-                    <textarea name="description" id="description" cols="50" rows="10" ng-model="answer.newUserComment.description" class="w3-input w3-border"></textarea>
-                    <label for="description">Comment</label>
-                </p>
-                <p>
+                    <textarea name="description" id="description" cols="50" rows="10" ng-model="answer.newUserComment.description" class="w3-input" placeholder="Your Comment"></textarea>
+                  </p>
+                  <p>
                     <!-- Button -->
-                    <input type="submit" value="Post Comment">
-                </p>
-            </form>
+                    <input type="submit" class="w3-large" value="Post Comment">
+                  </p>
+                </form>
+            </div>
     </div>
 </div>
