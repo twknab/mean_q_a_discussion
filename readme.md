@@ -8,6 +8,7 @@ Additionally Features:
 ## Some Issues:
 
 	+ JWTs seem to time out quicker than something like session. What's going on here?
+		- Seems that as each controller loads, you'll have to do another JWT authorization. Was playing around and resolved issues on `/dashboard`, however `/answer/:id` and `/user/:id` pages are not acting as expected. Need to continue to experiment why JWT is not working properly.
 	+ See if you can refactor/cleanup code.
 
 ### Dev Issues Log (recorded for learning purposes):

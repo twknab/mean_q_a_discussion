@@ -17,18 +17,15 @@ module.exports = {
         // Create 5 Categories
         Category.find({})
             .then(function(categories){
-                console.log('Checking # of categories:', categories.length);
                 if (categories.length < 1) {
-                    Category.create({name: 'General'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-                    Category.create({name: 'JavaScript'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-                    Category.create({name: 'Python'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-                    Category.create({name: 'Ruby'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-                    Category.create({name: 'PHP'}).then(function(newCategory) {console.log('category created...');}).catch(function(err) {console.log(err);})
-                    console.log('5 categories now created...');
+                    Category.create({name: 'General'}).then(function(newCategory) {}).catch(function(err) {console.log(err);})
+                    Category.create({name: 'JavaScript'}).then(function(newCategory) {}).catch(function(err) {console.log(err);})
+                    Category.create({name: 'Python'}).then(function(newCategory) {}).catch(function(err) {console.log(err);})
+                    Category.create({name: 'Ruby'}).then(function(newCategory) {}).catch(function(err) {console.log(err);})
+                    Category.create({name: 'PHP'}).then(function(newCategory) {}).catch(function(err) {console.log(err);})
                     return res.json('Categories successfully created.');
                 } else {
-                    console.log('Categories already exist...');
-                    return res.json('Categories alreay exist.');
+                    return res.json('Categories already exist.');
                 }
             })
             .catch(function(err) {
@@ -57,7 +54,7 @@ module.exports = {
                 // If User Found, Validate Username and Password:
                 foundUser.verifyPassword(req.body.password)
                     .then(function() {
-                        myToken = jwt.sign({username: req.body.username}, 'mySecretPasscode123!');
+                        myToken = jwt.sign({username: req.body.username}, 'mySecretPasscode123!', {expiresIn: '6h'});
                         return res.json({user: foundUser, myToken: myToken});
 
                     })
@@ -96,10 +93,10 @@ module.exports = {
 
     // Load logged in User from web token:
     getLoggedIn: function(req, res) {
+      myToken = jwt.sign({username: jwt.verify(myToken, 'mySecretPasscode123!').username}, 'mySecretPasscode123!', {expiresIn: '6h'});
         User.findOne({username: jwt.verify(myToken, 'mySecretPasscode123!').username})
             .then(function(foundUser) {
-                req.user = foundUser;
-                return res.json(foundUser);
+              return res.json({user: foundUser, myToken: myToken});
             })
             .catch(function(err) {
                 console.log(err);
@@ -108,10 +105,8 @@ module.exports = {
     },
     // Get Categories:
     getCategories: function(req, res) {
-        console.log('getting all categories...');
         Category.find({})
             .then(function(allCategories) {
-                console.log(allCategories);
                 return res.json(allCategories);
             })
             .catch(function(err) {
@@ -128,7 +123,6 @@ module.exports = {
                         newPost.updateUser(foundUser._id); // add user ID to post
                         newPost.initAnswerCount(); // initialize # of answers at 0
                         foundUser.addPost(newPost._id);
-                        console.log(foundUser, '%%%%%%%%%');
                         return res.json(newPost);
                     })
                     .catch(function(err) {
@@ -172,19 +166,20 @@ module.exports = {
     },
     // Find a Post for Answer and Comments page:
     getPost: function(req, res) {
-        Post.findOne({_id: req.params.id})
-            .populate('user')
-            .exec()
-            .then(function(postAndUser) {
-                return res.json(postAndUser);
-            })
-            .catch(function(err) {
-                return res.status(500).json(err);
-            })
+      console.log("GETTING POST");
+      Post.findOne({_id: req.params.id})
+          .populate('user')
+          .exec()
+          .then(function(postAndUser) {
+              myToken = jwt.sign({username: jwt.verify(myToken, 'mySecretPasscode123!').username}, 'mySecretPasscode123!', {expiresIn: '6h'});
+              return res.json({postAndUser: postAndUser, myToken: myToken});
+          })
+          .catch(function(err) {
+              return res.status(500).json(err);
+          })
     },
     // Make a new answer:
     newAnswer: function(req, res) {
-        console.log(req.body);
         Answer.create(req.body)
             .then(function(newAnswer) {
                 User.findOne({username: jwt.verify(myToken, 'mySecretPasscode123!').username})
@@ -217,7 +212,7 @@ module.exports = {
     },
     // Get Post Answers:
     getPostAnswers: function(req, res) {
-        console.log('server controller talking...', req.body);
+        myToken = jwt.sign({username: jwt.verify(myToken, 'mySecretPasscode123!').username}, 'mySecretPasscode123!', {expiresIn: '6h'});
         Answer.find({post: req.body.postID})
             .populate('user')
             .populate({
@@ -228,8 +223,7 @@ module.exports = {
             })
             .exec()
             .then(function(answersCommentsAndUsers) {
-                console.log(answersCommentsAndUsers);
-                return res.json(answersCommentsAndUsers);
+                return res.json({answersCommentsAndUsers: answersCommentsAndUsers, myToken: myToken});
             })
             .catch(function(err) {
                 return res.status(500).json(err);
@@ -237,7 +231,6 @@ module.exports = {
     },
     // Up Vote:
     upVote : function(req, res) {
-        console.log(req.body);
         Answer.findOne({_id: req.body.id})
             .then(function(foundAnswer) {
                 foundAnswer.upVote();
@@ -249,7 +242,6 @@ module.exports = {
     },
     // Down Vote:
     downVote : function(req, res) {
-        console.log(req.body);
         Answer.findOne({_id: req.body.id})
             .then(function(foundAnswer) {
                 foundAnswer.downVote();
@@ -263,10 +255,8 @@ module.exports = {
     newComment : function(req, res) {
         Comment.create(req.body) // create comment
             .then(function(newComment) {
-                console.log('$$$$: ', newComment);
                 User.findOne({username: jwt.verify(myToken, 'mySecretPasscode123!').username})
                     .then(function(foundUser) {
-                        console.log(foundUser._id);
                         foundUser.addComments(newComment._id);
                         newComment.updateUser(foundUser._id); // adds user ID to comment
                         newComment.addAnswer(req.body.answerID); // adds answer ID to Comment.answers array
@@ -289,8 +279,12 @@ module.exports = {
     },
     // Logout:
     logout : function(req, res) {
-        console.log('logging out now..');
         myToken = {};
         res.json('now logged out token destroyed.');
+    },
+    // JWT:
+    jwt : function(req, res) {
+        myToken = jwt.sign({username: jwt.verify(myToken, 'mySecretPasscode123!').username}, 'mySecretPasscode123!', {expiresIn: '6h'});
+        return res.json({myToken: myToken})
     },
 };

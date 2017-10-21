@@ -6,14 +6,13 @@ app.controller('userController', ['$scope', 'userFactory', '$location', '$routeP
             $scope.user = user;
         },
         logout: function() {
-            console.log('url redirecting...');
             $location.url('/');
         },
     };
 
     // Show User:
     $scope.showUser = function() {
-        console.log($routeParams.id);
+      console.log("SHOW USER RUNNING");
         userFactory.showUser($routeParams.id, cb.show);
     };
 
@@ -27,7 +26,6 @@ app.controller('userController', ['$scope', 'userFactory', '$location', '$routeP
 
     // Logout:
     $scope.logout = function() {
-        console.log('logging out..');
         userFactory.logout(cb.logout);
     };
 

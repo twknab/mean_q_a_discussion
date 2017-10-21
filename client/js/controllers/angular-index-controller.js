@@ -26,7 +26,6 @@ app.controller('indexController', ['$scope', 'indexFactory', '$location', '$rout
 
     // Create Categories:
     $scope.categories = function() {
-        console.log('Login Process: Angular controller running...', $scope.user);
         indexFactory.categories();
     };
 
@@ -35,13 +34,11 @@ app.controller('indexController', ['$scope', 'indexFactory', '$location', '$rout
 
     // Login User:
     $scope.login = function() {
-        console.log('Login Process: Angular controller running...', $scope.user);
         indexFactory.login($scope.user, cb.login, cb.loginError);
     };
 
     // Register User:
     $scope.register = function() {
-        console.log('Registering user...', $scope.newUser);
         indexFactory.register($scope.newUser, cb.register, cb.registerError);
     };
 

@@ -1,4 +1,4 @@
-app.controller('dashboardController', ['$scope', 'dashboardFactory', '$location', '$routeParams', function($scope, dashboardFactory, $location, $routeParams) {
+app.controller('dashboardController', ['$scope', 'dashboardFactory', 'userFactory', '$location', '$routeParams', function($scope, dashboardFactory, userFactory, $location, $routeParams) {
 
     // Callbacks:
     var cb = {
@@ -7,14 +7,12 @@ app.controller('dashboardController', ['$scope', 'dashboardFactory', '$location'
             $scope.user = user;
         },
         getCategories: function(categories) {
-            console.log('getting categories...');
             $scope.categories = categories;
         },
         post: function(newPost) {
             $scope.newPostErrors = '';
             $scope.post = {};
             $scope.getAllPosts();
-            console.log(newPost);
         },
         allPosts: function(allPosts) {
             $scope.allPosts = allPosts;
@@ -26,6 +24,9 @@ app.controller('dashboardController', ['$scope', 'dashboardFactory', '$location'
         newPostError: function(err) {
             $scope.newPostErrors = '';
             $scope.newPostErrors = err;
+        },
+        logout: function() {
+            $location.url('/');
         },
     };
 
@@ -46,7 +47,6 @@ app.controller('dashboardController', ['$scope', 'dashboardFactory', '$location'
 
     // Make New Post:
     $scope.newPost = function() {
-        console.log($scope.post);
         dashboardFactory.newPost($scope.post, cb.post, cb.newPostError);
     };
 
@@ -66,6 +66,11 @@ app.controller('dashboardController', ['$scope', 'dashboardFactory', '$location'
     $scope.sortBy = function(propertyName) {
         $scope.reverse = ($scope.propertyName === propertyName) ? !$scope.reverse : false;
         $scope.propertyName = propertyName;
+    };
+
+    // Logout:
+    $scope.logout = function() {
+        userFactory.logout(cb.logout);
     };
 
 }]);

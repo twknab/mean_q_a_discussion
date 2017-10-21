@@ -6,17 +6,14 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
             $scope.post = postAndUser;
         },
         answer: function(newAnswer) {
-            console.log(newAnswer);
             $scope.answer = {};
             $scope.getAnswers();
         },
         newAnswerError: function(err) {
-            console.log(err);
             $scope.newAnswerErrors = '';
             $scope.newAnswerErrors = err;
         },
         getAnswers: function(answersCommentsAndUsers) {
-            console.log(answersCommentsAndUsers);
             $scope.allAnswers = answersCommentsAndUsers;
         },
         upVote: function() {
@@ -26,7 +23,6 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
             $scope.getAnswers();
         },
         comment: function(newComment) {
-            console.log(newComment);
             // console.log($scope.allAnswers);
             for (var i = 0; i < $scope.allAnswers.length; i++) {
                 $scope.allAnswers[i].newUserComment = {};
@@ -40,14 +36,13 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
             $scope.newCommentErrors = err;
         },
         logout: function() {
-            console.log('url redirecting...');
             $location.url('/');
         },
     };
 
     // Get Post/Topic:
     $scope.getPost = function() {
-        console.log($routeParams.id);
+        console.log("getting post...")
         answerFactory.getPost($routeParams.id, cb.getPost);
     };
 
@@ -65,7 +60,6 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
 
     // Get All Answers:
     $scope.getAnswers = function() {
-        console.log('getting answers...', $routeParams.id);
         answerFactory.getAnswers({postID: $routeParams.id}, cb.getAnswers);
     };
 
@@ -74,23 +68,17 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
 
     // Up Vote:
     $scope.upVote = function(answer) {
-        console.log('controller');
-        console.log(answer._id);
         answerFactory.upVote({id: answer._id}, cb.upVote)
     };
 
     // Down Vote:
     $scope.downVote = function(answer) {
-        console.log('down voting...');
-        console.log(answer._id);
         answerFactory.downVote({id: answer._id}, cb.downVote)
     };
 
     // Create a Comment:
     $scope.newComment = function(answer) {
-        console.log(answer.newUserComment);
         answer.newUserComment.answerID = answer._id;
-        console.log(answer.newUserComment.answerID);
         answerFactory.newComment(answer.newUserComment, cb.comment, cb.commentError);
     };
 
@@ -101,7 +89,6 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
 
     // Logout:
     $scope.logout = function() {
-        console.log('logging out..');
         answerFactory.logout(cb.logout);
     };
 
