@@ -34,6 +34,7 @@
 .w3-card-4 .comment-card {
   box-shadow: none !important;
 }
-/*************************/
-/*    RESPONSIVENESS:    */
-/*************************/
+
+.comment-field {
+  height: 85px;
+}

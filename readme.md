@@ -5,6 +5,14 @@ Additionally Features:
 - Question table can be sorted by various column headings.
 - Answers can be up voted or down voted.
 
+## Setup & Install
+- Be sure to `npm install` and `bower install` all packages.
+- Create a `.env` file in the root project direcetory, and add the value:
+	`TOKEN_SECRET={{HashCodeHere}}`
+	Note: Replace `{{HashCodeHere}}` (including the brackets) with a long string.
+	This string is used for JSON web token authentication purposes and should be kept private. This file should not be committed to public repositories.
+
+
 ## Some Issues:
 
 	+ JWTs seem to time out quicker than something like session. What's going on here?

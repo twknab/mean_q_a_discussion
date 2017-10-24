@@ -1,3 +1,6 @@
+// Provide access to .env config file
+require('dotenv').config();
+
 // Setup 'client' and 'bower_components' static folders:
 module.exports = function(express, app, bodyParser, path, expressJWT, jwt) {
 
@@ -7,5 +10,5 @@ module.exports = function(express, app, bodyParser, path, expressJWT, jwt) {
         // .use(session(sessionInfo))
         // .use(bodyParser.urlencoded({extended: true}))
         .use(bodyParser.json()) // setup bodyParser to send form data as JSON
-        .use(expressJWT({secret: 'mySecretPasscode123!' }).unless({ path: ['/', '/login', '/register', '/post', '/user/:id', '/post/categories', '/topic:id', '/answer', '/comment', '/user/logout']}));
+        .use(expressJWT({secret: process.env.TOKEN_SECRET }).unless({ path: ['/', '/post/categories', '/login', '/register']}));
     };

@@ -1,4 +1,4 @@
-app.factory('indexFactory', ['$http', function($http) {
+app.factory('indexFactory', ['$http', '$window', 'tokenService', function($http, $window, tokenService) {
     // Setup Factory Object:
     var factory = {};
 
@@ -17,7 +17,9 @@ app.factory('indexFactory', ['$http', function($http) {
     factory.login = function(user, loginCallback, errorsCallback) {
         $http.post('/login', user)
             .then(function(foundUserAndToken) {
-                $http.defaults.headers.common.Authorization = "Bearer " + foundUserAndToken.data.myToken
+                console.log("Hash verified.");
+                tokenService.saveToken(foundUserAndToken.data.myToken);
+                console.log("Token saved.");
                 loginCallback();
             })
             .catch(function(err) {
@@ -30,8 +32,8 @@ app.factory('indexFactory', ['$http', function($http) {
     factory.register = function(newUser, registerCallback, errorsCallback) {
         $http.post('/register', newUser)
             .then(function(newUserAndToken) {
-                console.log(newUserAndToken.data);
-                $http.defaults.headers.common.Authorization = "Bearer " + newUserAndToken.data.myToken
+                // Save token to local storage:
+                tokenService.saveToken(newUserAndToken.data.myToken);
                 registerCallback();
             })
             .catch(function(err) {

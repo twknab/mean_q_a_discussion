@@ -1,4 +1,4 @@
-app.factory('userFactory', ['$http', function($http) {
+app.factory('userFactory', ['$http', '$window', 'tokenService', function($http, $window, tokenService) {
     // Setup Factory Object:
     var factory = {};
 
@@ -20,6 +20,8 @@ app.factory('userFactory', ['$http', function($http) {
     factory.logout = function(logoutCallback) {
         $http.post('/user/logout')
             .then(function() {
+                // Deletes token from local storage:
+                tokenService.removeLocal();
                 console.log('logged out!');
                 logoutCallback();
             })

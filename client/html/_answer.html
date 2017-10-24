@@ -57,7 +57,7 @@
 </div>
 <div class="w3-margin">
     <!-- All Answers Container -->
-    <div class="w3-card-4 w3-margin-bottom" ng-repeat="answer in allAnswers | orderBy:'-upVotes'">
+      <div class="w3-card-4 w3-margin-bottom" ng-repeat="answer in allAnswers | orderBy:'-upVotes'">
         <div class="w3-container w3-blue">
             <h3>Answer:</h3>
         </div>
@@ -72,30 +72,30 @@
             </span>
         </div>
         <p class="w3-margin w3-padding-16 inline-block"><i class="w3-xlarge fa fa-comment w3-text-grey"></i> <b><a href="#!/user/{{answer.user._id}}">{{answer.user.username}}</a></b>: {{answer.description}}</p>
-            <!-- container to hold all comments -->
-            <div class="w3-margin-left padding-left w3-padding-bottom" ng-repeat="comment in answer.comments">
-                <p class="w3-padding-right"><i class="w3-xlarge fa fa-comment-o w3-text-grey"></i> <a href="#!/users/{{comment.user._id}}"><b>{{comment.user.username}}</b></a>: {{comment.description}}</p>
+        <!-- All Comments Container -->
+        <div class="w3-margin-left padding-left w3-padding-bottom" ng-repeat="comment in answer.comments">
+            <p class="w3-padding-right"><i class="w3-xlarge fa fa-comment-o w3-text-grey"></i> <a href="#!/users/{{comment.user._id}}"><b>{{comment.user.username}}</b></a>: {{comment.description}}</p>
+        </div>
+        <!-- Post Comment Form -->
+        <div class="w3-card-4 w3-margin comment-card w3-padding-bottom">
+            <div class="w3-container w3-red">
+                <h5>Post a Comment</h5>
             </div>
-
-            <div class="w3-card-4 w3-margin comment-card w3-padding-bottom">
-                <div class="w3-container w3-red">
-                    <h5>Post a Comment</h5>
-                </div>
-                <!-- Errors -->
-                <div ng-repeat="commentError in answer.newCommentErrors" class="error w3-margin">
-                  <h3>{{commentError.message}}</h3>
-                </div>
-                <!-- Form -->
-                <form ng-submit="newComment(answer)" class="w3-margin-left w3-margin-right w3-padding-8">
-                  <p>
-                    <!-- Description Field -->
-                    <textarea name="description" id="description" cols="50" rows="10" ng-model="answer.newUserComment.description" class="w3-input" placeholder="Your Comment"></textarea>
-                  </p>
-                  <p>
-                    <!-- Button -->
-                    <input type="submit" class="w3-large" value="Post Comment">
-                  </p>
-                </form>
+            <!-- Errors -->
+            <div ng-repeat="commentError in answer.newCommentErrors" class="error w3-margin">
+              <h3>{{commentError.message}}</h3>
             </div>
-    </div>
+            <!-- Form -->
+            <form ng-submit="newComment(answer)" class="w3-margin-left w3-margin-right w3-padding-8">
+              <p>
+                <!-- Description Field -->
+                <textarea name="description" id="description" cols="50" rows="10" ng-model="answer.newUserComment.description" class="w3-input comment-field" placeholder="Your Comment"></textarea>
+              </p>
+              <p>
+                <!-- Button -->
+                <input type="submit" class="w3-large" value="Post Comment">
+              </p>
+            </form>
+        </div>
+      </div>
 </div>

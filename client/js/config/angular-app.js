@@ -2,7 +2,9 @@
 var app = angular.module('app', ['ngRoute']);
 
 // Define Routes:
-app.config(function($routeProvider) {
+app.config(function($routeProvider, $httpProvider) {
+    $httpProvider.interceptors.push('authInterceptor');
+
     $routeProvider
         .when('/', {
             templateUrl: 'html/_index.html', // root route partial

@@ -14,7 +14,7 @@ require('./config/app')(express, app, bodyParser, path, expressJWT, jwt);
 require('./config/db');
 
 // Setup Custom Middleware (if using):
-require('./middleware/user')(app);
+// require('./middleware/user')(app);
 
 // Setup Server-Side Routing:
 require('./config/routes')(app);
