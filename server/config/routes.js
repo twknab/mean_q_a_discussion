@@ -7,6 +7,7 @@ var morgan = require('morgan');
 module.exports = function(app) {
   // Route monitoring tool:
   app.use(morgan('dev'));
+  // API Routes:
   app.post('/register', Controller.register)
     .post('/login', Controller.login)
     .get('/login', Controller.getLoggedIn)
@@ -22,5 +23,4 @@ module.exports = function(app) {
     .post('/answer/vote/up/', Controller.upVote)
     .post('/answer/vote/down/', Controller.downVote)
     .post('/comment', Controller.newComment)
-  // .get('/comment', Controller.getAllComments)
 };
