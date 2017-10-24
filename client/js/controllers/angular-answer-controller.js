@@ -42,7 +42,6 @@ app.controller('answerController', ['$scope', 'answerFactory', '$location', '$ro
 
     // Get Post/Topic:
     $scope.getPost = function() {
-        console.log("getting post...")
         answerFactory.getPost($routeParams.id, cb.getPost);
     };
 

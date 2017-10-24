@@ -38,3 +38,7 @@
 .comment-field {
   height: 85px;
 }
+
+.post-category {
+  -moz-margin-top: 10px;
+}

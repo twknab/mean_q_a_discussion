@@ -17,9 +17,7 @@ app.factory('indexFactory', ['$http', '$window', 'tokenService', function($http,
     factory.login = function(user, loginCallback, errorsCallback) {
         $http.post('/login', user)
             .then(function(foundUserAndToken) {
-                console.log("Hash verified.");
                 tokenService.saveToken(foundUserAndToken.data.myToken);
-                console.log("Token saved.");
                 loginCallback();
             })
             .catch(function(err) {

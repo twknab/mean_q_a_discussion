@@ -12,8 +12,7 @@ app.controller('userController', ['$scope', 'userFactory', '$location', '$routeP
 
     // Show User:
     $scope.showUser = function() {
-      console.log("SHOW USER RUNNING");
-        userFactory.showUser($routeParams.id, cb.show);
+      userFactory.showUser($routeParams.id, cb.show);
     };
 
     // Show User on Partial Load:

@@ -1,10 +1,7 @@
 // register the interceptor as a service
 app.factory('authInterceptor', function($q, tokenService, $location) {
   return {
-    // optional method
     request: function(config) {
-      // do something on success
-      console.log("REQUEST MADE");
       token = tokenService.getToken();
       if (token) {
         // If token, send authorization jwt header:
@@ -15,13 +12,20 @@ app.factory('authInterceptor', function($q, tokenService, $location) {
       return config;
     },
 
+    requestError: function(rejection) {
+      return $q.reject(rejection);
+    },
+
+    response: function(response) {
+      // do something on success
+      return response;
+    },
+
     responseError: function(rejection) {
-      console.log("THIS IS THE RESPONSE ERROR:");
-      if (rejection.status == 401 || rejection.status == 500) {
-        console.log("401 ERROR DUDE...REDIRECTION");
+      if (rejection.status == 401 || rejection.status == 500 || rejection.status == 404) {
         $location.url('/');
       }
       return $q.reject(rejection);
-    }
+    },
   };
 })

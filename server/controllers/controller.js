@@ -150,10 +150,7 @@ module.exports = {
         username: tokenizer.getPayload().username
       })
       .then(function(foundUser) {
-        return res.json({
-          user: foundUser,
-          myToken: myToken
-        });
+        return res.json(foundUser);
       })
       .catch(function(err) {
         console.log(err);

@@ -7,7 +7,7 @@ app.factory('dashboardFactory', ['$http', function($http) {
         $http.get('/login')
             .then(function(foundUser) {
                 // $http.defaults.headers.common.Authorization = "Bearer " + foundUser.data.myToken;
-                getUserCallback(foundUser.data.user);
+                getUserCallback(foundUser.data);
             })
             .catch(function(err) {
                 console.log('Error from DB:', err.data);

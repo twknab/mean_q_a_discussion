@@ -4,7 +4,6 @@ app.factory('answerFactory', ['$http', '$window', 'tokenService', function($http
 
   // Get Post on Page Load:
   factory.getPost = function(id, showPostCallback) {
-    console.log("Going to try and get post now....")
     $http.get('/post/' + id)
       .then(function(postAndUser) {
         showPostCallback(postAndUser.data);
