@@ -6,7 +6,6 @@ app.service('tokenService', function($window) {
       Saves token to local storage.
       */
 
-      console.log("Saving token...");
       $window.localStorage.jwtToken = token;
       return $window.localStorage.jwtToken;
     },
@@ -15,7 +14,6 @@ app.service('tokenService', function($window) {
       Returns token from local storage.
       */
 
-      console.log("Getting token...")
       return $window.localStorage.jwtToken;
     },
     isAuthed: function() {
@@ -35,7 +33,6 @@ app.service('tokenService', function($window) {
       Removes token from local storage.
       */
 
-      console.log("Removing token from local storage...");
       delete $window.localStorage['jwtToken'];
       return undefined;
     },
