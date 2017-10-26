@@ -14,5 +14,4 @@ Additionally Features:
 
 
 ## Some Issues:
-
-	+ Issue where if a response error is intercepted, the page is redirected but the response does not seem to fully complete.
+- Bug where in Safari only, page load hangs after a 401/500 redirect in angular interceptor
