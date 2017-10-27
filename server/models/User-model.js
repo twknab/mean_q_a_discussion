@@ -1,6 +1,5 @@
 // Setup dependencies:
 var mongoose = require('mongoose'),
-    bcrypt = require('bcrypt'),
     bcrypt = require('bcrypt-as-promised'),
     Schema = mongoose.Schema;
 

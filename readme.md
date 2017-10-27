@@ -14,4 +14,4 @@ Additionally Features:
 
 
 ## Some Issues:
-- Bug where in Safari only, page load hangs after a 401/500 redirect in angular interceptor
+- Bug where in Safari only, page load hangs after a user tries and access a back-end page without a valid token or being logged in. Note: I've tried posting on StackOverflow, and copied the entire program and dissected it. I attempted to remove the interceptor, the tokenizer service, various modules, and over and over again I received the same error. For now I have to step away from this project as I've sunk a lot of time. The program works as desired on all browsers other than Safari. And in Safari the bug is not experienced unless a user manually enters  back-end page (or tried to access it via a bookmark). Confusing and ... well... alas.

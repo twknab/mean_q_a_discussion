@@ -1,11 +1,9 @@
-// register the interceptor as a service
 app.factory('authInterceptor', function($q, tokenService, $location) {
   return {
     request: function(config) {
       token = tokenService.getToken();
       if (token) {
         // If token, send authorization jwt header:
-        console.log("Authorizing token...");
         config.headers.Authorization = "Bearer " + token;
       }
 
@@ -13,11 +11,12 @@ app.factory('authInterceptor', function($q, tokenService, $location) {
     },
 
     requestError: function(rejection) {
+      // Do stuff here with the request error:
       return $q.reject(rejection);
     },
 
     response: function(response) {
-      // do something on success
+      // Do stuff here if you want to intercept the response:
       return response;
     },
 

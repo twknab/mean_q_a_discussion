@@ -18,7 +18,6 @@ app.controller('dashboardController', ['$scope', 'dashboardFactory', 'userFactor
             $scope.allPosts = allPosts;
         },
         getUserError: function(err) {
-            console.log('Errors returned from server:', err);
             $location.url('/');
         },
         newPostError: function(err) {

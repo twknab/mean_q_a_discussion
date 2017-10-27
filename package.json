@@ -9,7 +9,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcrypt": "^1.0.2",
     "bcrypt-as-promised": "^1.1.0",
     "body-parser": "^1.16.0",
     "dotenv": "^4.0.0",

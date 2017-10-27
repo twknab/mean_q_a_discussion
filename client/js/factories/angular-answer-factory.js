@@ -1,4 +1,4 @@
-app.factory('answerFactory', ['$http', '$window', 'tokenService', function($http, $window, tokenService) {
+app.factory('answerFactory', ['$http', 'tokenService', function($http, tokenService) {
   // Setup Factory Object:
   var factory = {};
 

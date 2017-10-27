@@ -10,7 +10,6 @@ app.factory('dashboardFactory', ['$http', function($http) {
                 getUserCallback(foundUser.data);
             })
             .catch(function(err) {
-                console.log('Error from DB:', err.data);
                 errorsCallback(err.data);
             })
     };
@@ -21,7 +20,7 @@ app.factory('dashboardFactory', ['$http', function($http) {
                 getCategoriesCallback(allCategories.data);
             })
             .catch(function(err) {
-                console.log(err.data);
+                // console.log(err.data); // commenting out this log to prevent giivng too much info to front end clients
             })
     };
 
@@ -31,7 +30,7 @@ app.factory('dashboardFactory', ['$http', function($http) {
                 postCallback(createdPost.data);
             })
             .catch(function(err) {
-                console.log(err.data)
+                // console.log(err.data); // commenting out this log to prevent giivng too much info to front end clients
                 errorsCallback(err.data);
             })
     };
@@ -42,7 +41,7 @@ app.factory('dashboardFactory', ['$http', function($http) {
                 allPostsCallback(allPosts.data);
             })
             .catch(function(err) {
-                console.log(err.data);
+                // console.log(err.data); // commenting out this log to prevent giivng too much info to front end clients
             })
     };
 

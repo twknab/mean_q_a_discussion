@@ -7,7 +7,6 @@ let myToken;
 module.exports = {
   create: function(payload) {
     myToken = jwt.sign({ username: payload }, process.env.TOKEN_SECRET, {expiresIn: '6h'});
-    console.log("Token created:", myToken);
     return myToken;
   },
   getPayload: function() {
